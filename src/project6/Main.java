@@ -23,7 +23,6 @@ public class Main {
 				System.out.print("Enter Interface Type: ");
 			}
 		}while(true);
-		
 
 	}
 
