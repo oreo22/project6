@@ -2,6 +2,8 @@ package project6;
 
 import java.util.ArrayList;
 
+import project6.Pegs.*;
+
 /**
  * Created by Oriana_W on 20/11/2015.
  */
