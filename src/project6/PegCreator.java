@@ -17,7 +17,7 @@ public class PegCreator {
                 break;
             case 4:  pegColor = "Red";
                 break;
-            default: pegColor = "Yellow";
+            default: pegColor = "Yellow"; //5
                 break;
         }
         return pegColor;

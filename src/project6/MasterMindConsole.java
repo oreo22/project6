@@ -17,11 +17,10 @@ public class MasterMindConsole {
 			if(answer.get(answerPeg.pegName)!=null){
 				answer.get(answerPeg.pegName).add(x);
 			}
-			else{
+			else {
 				answer.put(answerPeg.pegName, colorPositions);
 			}
 		}
-		System.out.println("Hey");
 	}
 	private static int randomIntGenerator(){
 		Random rand = new Random();
@@ -33,7 +32,7 @@ public class MasterMindConsole {
 		ArrayList <Integer> checker=new ArrayList<>(Params.pegNumbertoGuess);
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			Peg test1=userInput.get(x);
-			checker=answer.get(test1.pegName); //DOESN'T HAVE A TEMP ANSWER, DOESN'T TAKE CARE OF THE CASE OF DUPLICATES
+			checker=answer.get(test1.pegName);
 			if(checker==null){ //if color doesn't exist in the answer
 				System.out.println("Wrong");
 			}
