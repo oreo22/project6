@@ -18,8 +18,8 @@ public abstract class Peg {
 			return false;
 		}
 	}
-/*	public String hashCode(){
-		return this.pegName;
-	}*/
+	public int hashCode(){
+		return this.pegName.hashCode();
+	}
 
 }

@@ -5,20 +5,20 @@ import project6.Pegs.*;
 
 public class MasterMindConsole {
 	private static Peg[][] gameGrid = new Peg[Params.boardWidth][Params.boardHeight];
-	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(4);
+	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
-			int temp=randomIntGenerator();
+			int temp=x;//randomIntGenerator();
 			Peg answerPeg=PegCreator.pegConstructor(PegCreator.numberToPegColor(temp));
-			ArrayList<Integer> colorPositions=new ArrayList<>(Params.pegNumbertoGuess);
-			colorPositions.add(x);
-			if(answer.get(answerPeg.pegName)!=null){
-				answer.get(answerPeg.pegName).add(x);
+			if(answer.get(answerPeg.pegName)==null){
+				ArrayList<Integer> colorPositions=new ArrayList<>(Params.pegNumbertoGuess);
+				colorPositions.add(x);
+				answer.put(answerPeg.pegName, colorPositions);
 			}
 			else {
-				answer.put(answerPeg.pegName, colorPositions);
+				answer.get(answerPeg.pegName).add(x);
 			}
 		}
 	}
@@ -30,10 +30,14 @@ public class MasterMindConsole {
 	public static ArrayList inputCheck(ArrayList<Peg> userInput){
 		ArrayList<Peg> pegAnswer = new ArrayList<Peg>(Params.pegNumbertoGuess);
 		ArrayList <Integer> checker=new ArrayList<>(Params.pegNumbertoGuess);
+		HashMap<String, ArrayList<Integer>> answercopy=(HashMap) answer.clone();
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			Peg test1=userInput.get(x);
-			checker=answer.get(test1.pegName);
+			checker=answercopy.get(test1.pegName);
 			if(checker==null){ //if color doesn't exist in the answer
+				System.out.println("Wrong");
+			}
+			else if(checker.size()<=0){
 				System.out.println("Wrong");
 			}
 			else{
@@ -42,6 +46,7 @@ public class MasterMindConsole {
 					if(((Integer)x).equals(checker.get(i))){ //same color and position
 						System.out.println("Black");
 						checkedFlag=true;
+						answercopy.get(test1.pegName).remove(i); // remove the index already found
 						break;
 						//pegAnswer.add(new BlackPeg());
 					}
