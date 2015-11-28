@@ -8,9 +8,9 @@ public class MasterMindConsole {
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 
 	//-----Creating random code for user to guess--------
-	public static void answerGenerator(){
+	public static void answerGenerator(){ //it's public because Main is using it
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
-			int temp=x;//randomIntGenerator();
+			int temp=randomIntGenerator();
 			Peg answerPeg=PegCreator.pegConstructor(PegCreator.numberToPegColor(temp));
 			if(answer.get(answerPeg.pegName)==null){
 				ArrayList<Integer> colorPositions=new ArrayList<>(Params.pegNumbertoGuess);
@@ -27,33 +27,34 @@ public class MasterMindConsole {
 		int value = rand.nextInt(5);
 		return value;
 	}
-	public static ArrayList inputCheck(ArrayList<Peg> userInput){
+	//------Did the user guess the correct code?----
+	public static ArrayList inputCheck(ArrayList<Peg> userInput){ //Text Interface is using this
+		//Tad PROBLEM is that this method uses the pegname or the peg color's name as the Hashmap's key
+		//If we have time, I would like to fix this so that it uses Peg value as the key
 		ArrayList<Peg> pegAnswer = new ArrayList<Peg>(Params.pegNumbertoGuess);
 		ArrayList <Integer> checker=new ArrayList<>(Params.pegNumbertoGuess);
-		HashMap<String, ArrayList<Integer>> answercopy=(HashMap) answer.clone();
+		HashMap<String, ArrayList<Integer>> answercopy=answercopier();
+	//	ArrayList<Integer> countOfEachPeg=new ArrayList<>(Params.pegNumbertoGuess);
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			Peg test1=userInput.get(x);
 			checker=answercopy.get(test1.pegName);
-			if(checker==null){ //if color doesn't exist in the answer
-				System.out.println("Wrong");
-			}
-			else if(checker.size()<=0){
-				System.out.println("Wrong");
+			if(checker==null || checker.size()<=0){ //if color doesn't exist in the answer
+				//do nothing
 			}
 			else{
 				boolean checkedFlag=false;
 				for(int i=0; i<checker.size(); i++){
 					if(((Integer)x).equals(checker.get(i))){ //same color and position
-						System.out.println("Black");
+						pegAnswer.add(new BlackPeg());
 						checkedFlag=true;
 						answercopy.get(test1.pegName).remove(i); // remove the index already found
 						break;
-						//pegAnswer.add(new BlackPeg());
+						//
 					}
 				}
 				if(checkedFlag==false){ //index doesn't match any of the ones stored,
-						System.out.println("White"); // it means
-						//pegAnswer.add(new WhitePeg()); //same color, wrong position
+						pegAnswer.add(new WhitePeg()); //same color, wrong position
+
 				}
 			}
 
@@ -61,7 +62,18 @@ public class MasterMindConsole {
 		}
 		return pegAnswer;
 	}
-
+	//----Creates a temp copy of the answer the player is supposed to guess------
+	private static HashMap<String, ArrayList<Integer>> answercopier (){
+		HashMap<String, ArrayList<Integer>> answerCopy= new HashMap<>(Params.pegNumbertoGuess);
+		for (HashMap.Entry<String, ArrayList<Integer>> entry : answer.entrySet())
+			answerCopy.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+		return answerCopy;
+	}
+	//----Create a temp copy of the number of pegs in each arraylist in the hashmap----
+	private static ArrayList<Integer> numOfEachPeg(HashMap<String, ArrayList<Integer>> anwercopier){
+		ArrayList<Integer> countOfEachPeg=new ArrayList<>(Params.pegNumbertoGuess);
+		return countOfEachPeg;
+	}
 	//private static ArrayList<Peg> answer = new ArrayList<Peg>(Params.pegNumbertoGuess);
 	
 /*	public static ArrayList inputCheck(ArrayList<Peg> userInput){

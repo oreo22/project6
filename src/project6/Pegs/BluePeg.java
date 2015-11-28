@@ -16,4 +16,9 @@ public class BluePeg extends Peg {
     }
 
 
+    @Override
+    public Peg copy() {
+        BluePeg copy=new BluePeg();
+        return copy;
+    }
 }

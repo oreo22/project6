@@ -8,5 +8,5 @@ public class Params {
 	public final static int boardHeight = 0;
 	public final static int numberOfPegTypes=6;
 	public final static int pegNumbertoGuess=4; //the user needs to guess 4 peg colors
-	public final static boolean gameWin=false;
+	public static boolean gameWin=false;
 }

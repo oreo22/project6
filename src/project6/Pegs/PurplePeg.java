@@ -11,4 +11,8 @@ public class PurplePeg extends Peg {
         pegText='P';
         pegName="Purple";
     }
+    public Peg copy() {
+        PurplePeg copy=new PurplePeg();
+        return copy;
+    }
 }

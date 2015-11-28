@@ -11,7 +11,7 @@ public abstract class Peg {
 	public String pegName;
 
 	public boolean equals(Peg p2){ //same color, does this method look at the dynamic type?
-		if(this.pegName.equals(p2.pegName)){
+		if(this.hashCode()==(p2.hashCode())){
 			return true;
 		}
 		else {
@@ -21,5 +21,6 @@ public abstract class Peg {
 	public int hashCode(){
 		return this.pegName.hashCode();
 	}
+	public abstract Peg copy();
 
 }

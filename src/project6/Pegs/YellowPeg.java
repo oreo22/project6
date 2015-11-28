@@ -7,4 +7,8 @@ public class YellowPeg extends Peg {
         pegText='Y';
         pegName="Yellow";
     }
+    public Peg copy() {
+        YellowPeg copy=new YellowPeg();
+        return copy;
+    }
 }

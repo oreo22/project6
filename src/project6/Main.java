@@ -7,39 +7,39 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-/*		System.out.println("For Console Interface, please type 'Console'");
-		System.out.println("For Graphical Interface, please type 'Graphical'");
-		System.out.print("Enter Interface Type: ");*/
-		System.out.println("Please enter your guess: ");
+		boolean playAgain=true;
+		boolean gameplayed=false;
+		MasterMindConsole.answerGenerator();
+
 		Scanner s = new Scanner(System.in);
 		do{
-            /*
-            ----Input Checker still needs work on:      -----
-            STILL NEED TO WORK ON DUPLICATES IN THE USER INPUT LIKE USER: RRRR WHILE ANSWER: RBYG (use a local?)
-            FIX THE RANDOMIZER for answer creator, NOT SURE IF ITS EVER DOING YELLOW
-            SEE IF IT'S EVER GOING TO OUTPUT A WHITE PEG
-            FIX THE HASHMAP TO WORK WITH PEG KEYS
-            MAKE SURE THE ANSWER GENERATOR IS WORKING PROPERLY
-            FIX THE PRIVATE AND PUBLIC METHODS AND VARIABLES
-            REMOVE TESTING CODE
-             */
-            MasterMindConsole.answerGenerator();
-
-			String input = s.nextLine();
-            MasterMindTextInterface.creatingUserInput(input);
-            /*			if(input.equals("Console") || input.equals("console")){
+			System.out.println("For Console Interface, please type 'Console'");
+			System.out.println("For Graphical Interface, please type 'Graphical'");
+			System.out.print("Enter Interface Type: ");
+			String consoleType=s.nextLine();
+			if(consoleType.equals("Console") || consoleType.equals("console")){
 				MasterMindTextInterface.launch();
-				break;
+				gameplayed=true;
 			}
-			else if(input.equals("Graphical") || input.equals("graphical")){
+			else if(consoleType.equals("Graphical") || consoleType.equals("graphical")){
 				System.out.println("Graphics");
-				break;
+				gameplayed=true;
 			}
 			else{
-				System.out.println("Please type in a proper input.\n");
-				System.out.print("Enter Interface Type: ");
-			}*/
-		}while(true);
+				System.out.println("Incorrect input. Please try again.");
+			}
+			if(gameplayed==true) {
+				System.out.println("Play Again? (Y/N)");
+				String play = s.next();
+				if (play.equals("N")) {
+					playAgain = false;
+					System.out.println("Thanks for playing!");
+				}
+				gameplayed=false;
+			}
+			//Graphical or Text?
+			//Human Vs. Computer (Human guesses) or Computer vs. Human (Computer guesses)
+		}while(playAgain==true);
 
 	}
 

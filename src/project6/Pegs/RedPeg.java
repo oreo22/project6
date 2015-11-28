@@ -7,4 +7,8 @@ public class RedPeg extends Peg {
         pegText='R';
         pegName="Red";
     }
+    public Peg copy() {
+        RedPeg copy=new RedPeg();
+        return copy;
+    }
 }

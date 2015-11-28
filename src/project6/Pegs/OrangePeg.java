@@ -11,4 +11,8 @@ public class OrangePeg extends Peg {
         pegText='O';
         pegName="Orange";
     }
+    public Peg copy() {
+        OrangePeg copy=new OrangePeg();
+        return copy;
+    }
 }
