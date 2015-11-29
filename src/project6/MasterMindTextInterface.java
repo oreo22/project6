@@ -30,7 +30,10 @@ public class MasterMindTextInterface {
 		int numberBlackPegs =0;
 		int numberWhitePegs=0;
 		for(int i=0; i<pegAnswer.size(); i++){
-			if(pegAnswer.get(i).equals(new BlackPeg())){
+			if(pegAnswer.get(i)==null){
+				//continue;
+			}
+			else if(pegAnswer.get(i).equals(new BlackPeg())){
 				numberBlackPegs++;
 			}
 			else if(pegAnswer.get(i).equals(new WhitePeg())){

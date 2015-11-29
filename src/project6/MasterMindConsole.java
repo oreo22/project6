@@ -6,7 +6,6 @@ import project6.Pegs.*;
 public class MasterMindConsole {
 	private static Peg[][] gameGrid = new Peg[Params.boardWidth][Params.boardHeight];
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
-
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){ //it's public because Main is using it
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
@@ -39,26 +38,30 @@ public class MasterMindConsole {
 			Peg test1=userInput.get(x);
 			checker=answercopy.get(test1.pegName);
 			if(checker==null || checker.size()<=0){ //if color doesn't exist in the answer
-				//do nothing
+				pegAnswer.add(x,null);
 			}
 			else{
 				boolean checkedFlag=false;
 				for(int i=0; i<checker.size(); i++){
 					if(((Integer)x).equals(checker.get(i))){ //same color and position
-						pegAnswer.add(new BlackPeg());
+						pegAnswer.add(x,new BlackPeg());
 						checkedFlag=true;
 						answercopy.get(test1.pegName).remove(i); // remove the index already found
 						break;
 						//
 					}
 				}
-				if(checkedFlag==false){ //index doesn't match any of the ones stored,
-						pegAnswer.add(new WhitePeg()); //same color, wrong position
-
+				if(checkedFlag==false){
+					pegAnswer.add(x,new WhitePeg());
 				}
 			}
-
-
+		}
+		for(int x=0; x<pegAnswer.size(); x++){
+			if(pegAnswer.get(x) instanceof WhitePeg){
+				if((answercopy.get(userInput.get(x).pegName).size()<=0)){
+					pegAnswer.set(x,null);
+				}
+			}
 		}
 		return pegAnswer;
 	}
