@@ -22,7 +22,7 @@ public class Main {
 				gameplayed=true;
 			}
 			else if(consoleType.equals("Graphical") || consoleType.equals("graphical")){
-				System.out.println("Graphics");
+				MastermindFX.launch(MastermindFX.class, args);
 				gameplayed=true;
 			}
 			else{

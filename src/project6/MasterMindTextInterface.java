@@ -8,7 +8,7 @@ public class MasterMindTextInterface {
 	
 	public static void launch(){
 		System.out.println("You're in the Text-based console!");
-		for(int guessCount=0; guessCount<12; guessCount++){
+		for(int guessCount=0; guessCount<Params.amountOfGuesses; guessCount++){
 			System.out.println("Please enter your guess: ");
 			Scanner s = new Scanner(System.in);
 			String input = s.nextLine();
