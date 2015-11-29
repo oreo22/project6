@@ -26,8 +26,8 @@ public class MasterMindConsole {
 		int value = rand.nextInt(5);
 		return value;
 	}
-	//------Did the user guess the correct code?----
-	public static ArrayList inputCheck(ArrayList<Peg> userInput){ //Text Interface is using this
+	//------Did the user guess the correct code?---- From graphics or console, just send in an arraylist of Pegs, and this method will check for you
+	public static ArrayList inputCheck(ArrayList<Peg> userInput){
 		//Tad PROBLEM is that this method uses the pegname or the peg color's name as the Hashmap's key
 		//If we have time, I would like to fix this so that it uses Peg value as the key
 		ArrayList<Peg> pegAnswer = new ArrayList<Peg>(Params.pegNumbertoGuess);

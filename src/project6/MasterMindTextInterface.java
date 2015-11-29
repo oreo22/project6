@@ -14,7 +14,7 @@ public class MasterMindTextInterface {
 			String input = s.nextLine();
 			ArrayList<Peg> userInput=MasterMindTextInterface.creatingUserInput(input);
 			ArrayList<Peg> pegAnswer=MasterMindConsole.inputCheck(userInput);
-			if(checkFeedback(pegAnswer)){
+			if(checkFeedbackForConsole(pegAnswer)){
 				Params.gameWin=true;
 				break;
 			}
@@ -26,7 +26,7 @@ public class MasterMindTextInterface {
 			System.out.println("Congratulations Human. You win this time.");
 		}
 	}
-	private static boolean checkFeedback(ArrayList<Peg> pegAnswer){
+	private static boolean checkFeedbackForConsole(ArrayList<Peg> pegAnswer){
 		int numberBlackPegs =0;
 		int numberWhitePegs=0;
 		for(int i=0; i<pegAnswer.size(); i++){
