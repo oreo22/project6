@@ -26,5 +26,10 @@ public class AIMastermind {
             //if it's a white peg, we switch the order of the things we have?
         }
     }
-
+    /*Method I use to play:
+    * 1. Guess all possible colors
+    * 2. Depending on feedback, I replace x-(WBpegNum) number of colors to see if I get the same feedback or better
+    * 3. If feedback is better (# of pegs is better than the last guess), i change very minimal
+    * 4. Goal is to get all the white pegs first
+    * 5. Then I mess around with the order of pegs*/
 }
