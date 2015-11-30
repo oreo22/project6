@@ -41,6 +41,15 @@ public class PegCreator {
         else if(pegName=="Yellow"){
             return new YellowPeg();
         }
+        else if(pegName == "Gray"){
+        	return new GrayPeg();
+        }
+        else if(pegName == "White"){
+        	return new WhitePeg();
+        }
+        else if(pegName == "Black"){
+        	return new BlackPeg();
+        }
         else {
             return null;
         }

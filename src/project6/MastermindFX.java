@@ -3,6 +3,7 @@ import javafx.scene.paint.Color;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javafx.application.*;
 import javafx.event.ActionEvent;
@@ -24,9 +25,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import project6.Pegs.Peg;
 
 public class MastermindFX extends Application{
 	RoundButton[][] gameBoardButtons = new RoundButton[Params.boardWidth][Params.boardHeight];
+	feedbackFlowPane[][] feedbackBoard = new feedbackFlowPane[1][Params.boardHeight];
+	
 	double BUTTON_PADDING = 30;
 	private static String cursorColor = "gray";
 	private static Scene s;
@@ -34,29 +38,59 @@ public class MastermindFX extends Application{
 	
 	//New Type of Button that has a color component to it and is also round//
 	private class RoundButton extends Button{
-		String color;
-		RoundButton(String color){
+		Peg pegInput;
+		int size;
+		RoundButton(String color, int size){
+			this.pegInput = PegCreator.pegConstructor(color);
+			this.size = size;
 			 this.setStyle(
 		                "-fx-background-radius: 5em; " +
-		                "-fx-min-width: 30px; " +
-		                "-fx-min-height: 30px; " +
-		                "-fx-max-width:30px; " +
-		                "-fx-max-height: 30px;" + "-fx-base: "+color+";"
+		                "-fx-min-width: "+size+"px; " +
+		                "-fx-min-height: "+size+"px; " +
+		                "-fx-max-width: "+size+"px; " +
+		                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.pegName+";"
 		        );
-			this.color = color;
+			 
 		}
 		
-		private void changeColor(String color){
+		private void redraw(){
 			this.setStyle(
 	                "-fx-background-radius: 5em; " +
-	                "-fx-min-width: 30px; " +
-	                "-fx-min-height: 30px; " +
-	                "-fx-max-width:30px; " +
-	                "-fx-max-height: 30px;" + "-fx-base: "+color+";"
+	                "-fx-min-width: "+size+"px; " +
+	                "-fx-min-height: "+size+"px; " +
+	                "-fx-max-width:"+size+"px; " +
+	                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.pegName+";"
 	        );
-			this.color = color;
+		}
+		
+	}
+	
+	
+	//Made a flowPane for the feedback tiles to make it easier to change//
+	private class feedbackFlowPane extends FlowPane{
+		
+		feedbackFlowPane(){
+		this.setPrefWrapLength(30);
+		this.getChildren().add(new RoundButton("Gray",15));
+		this.getChildren().add(new RoundButton("Gray",15));
+		this.getChildren().add(new RoundButton("Gray",15));
+		this.getChildren().add(new RoundButton("Gray",15));
+		}
+		
+		private void changeFeedback(ArrayList<Peg> consoleFeedback){
+			int pos=0;
+			for(int x=0; x<consoleFeedback.size(); x++){
+				Peg color = consoleFeedback.get(x);
+				if(color != null){
+					this.getChildren().set(pos++,new RoundButton(color.pegName, 15));
+				}
+			}
 		}
 	}
+	
+	
+	//---------------------------End of New Classes-----------------------//
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -80,7 +114,7 @@ public class MastermindFX extends Application{
 		//Creating the gameboard of buttons//
 		for(int x=0; x<gameBoardButtons.length; x++){
 			for(int y=0; y<gameBoardButtons[x].length; y++){
-				RoundButton button = new RoundButton("gray");
+				RoundButton button = new RoundButton("Gray", 30);
 				gameBoardButtons[x][y] = button;
 				gameBoard.add(button, x, y);
 				registerGameBoardButton(button); //this adds the handler to each button
@@ -104,13 +138,22 @@ public class MastermindFX extends Application{
 		
 		
 		
+		
+
+		//Creating FeedBackboard and inserting it into the center board
+		for(int y=0; y<feedbackBoard[0].length; y++){
+			feedbackBoard[0][y] = new feedbackFlowPane();
+			gameBoard.add(feedbackBoard[0][y], Params.boardWidth, y);
+		}
+		
+		
 		  //Making all the different buttons the user can click to input into board//
-	      RoundButton blueRoundButton = new RoundButton("blue");
-	      RoundButton redRoundButton = new RoundButton("red");
-	      RoundButton yellowRoundButton = new RoundButton("yellow");
-	      RoundButton greenRoundButton = new RoundButton("green");
-	      RoundButton orangeRoundButton = new RoundButton("orange");
-	      RoundButton purpleRoundButton = new RoundButton("purple");
+	      RoundButton blueRoundButton = new RoundButton("Blue", 30);
+	      RoundButton redRoundButton = new RoundButton("Red", 30);
+	      RoundButton yellowRoundButton = new RoundButton("Yellow", 30);
+	      RoundButton greenRoundButton = new RoundButton("Green", 30);
+	      RoundButton orangeRoundButton = new RoundButton("Orange", 30);
+	      RoundButton purpleRoundButton = new RoundButton("Purple", 30);
 	      colorKey.getChildren().add(blueRoundButton);
 	      colorKey.getChildren().add(redRoundButton);
 	      colorKey.getChildren().add(yellowRoundButton);
@@ -149,7 +192,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/blueCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "blue";
+		    	   cursorColor = "Blue";
 		    	   }
 		});
 		redRoundButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -157,7 +200,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/redCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "red";
+		    	   cursorColor = "Red";
 		    	   }
 		});
 		yellowRoundButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -165,7 +208,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/yellowCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "yellow";
+		    	   cursorColor = "Yellow";
 		    	   }
 		});
 		greenRoundButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -173,7 +216,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/greenCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "green";
+		    	   cursorColor = "Green";
 		    	   }
 		});
 		orangeRoundButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -181,7 +224,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/orangeCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "orange";
+		    	   cursorColor = "Orange";
 		    	   }
 		});
 		purpleRoundButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -189,7 +232,7 @@ public class MastermindFX extends Application{
 		       public void handle(ActionEvent e) {
 		    	   Image image = new Image("/images/purpleCursor.png");	
 		    	   s.setCursor(new ImageCursor(image));
-		    	   cursorColor = "purple";
+		    	   cursorColor = "Purple";
 		    	   }
 		});
 		
@@ -201,16 +244,19 @@ public class MastermindFX extends Application{
 		check.setOnAction(new EventHandler<ActionEvent>() {
 		       @Override
 		       public void handle(ActionEvent e) {
-		    	   
+		    	   ArrayList<Peg> userInput = new ArrayList<Peg>();
 		    	   //Check to see if any of the buttons in the same row are gray//
 		    	   for(int x=0; x<Params.boardWidth; x++){
-		    		   if(gameBoardButtons[x][rowIndex].color.equals("gray")){
+		    		   if(gameBoardButtons[x][rowIndex].pegInput.pegName.equals("Gray")){
 		    			   return;
 		    		   }
+		    		   userInput.add(gameBoardButtons[x][rowIndex].pegInput);
 		    	   	}
 		    	   //---------------------------End of Check---------------------//
 		    	   
 		    	   
+		    	    feedbackBoard[0][rowIndex].changeFeedback(MasterMindConsole.inputCheck(userInput));
+		    	    
 		    	   
 		    	   //Disabling previous row//
 		    	   for(int x=0; x<Params.boardWidth; x++){
@@ -228,9 +274,12 @@ public class MastermindFX extends Application{
 	private static void registerGameBoardButton(RoundButton button){
 		button.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event){
-				button.changeColor(cursorColor);
-				cursorColor = "gray";
-				s.setCursor(Cursor.DEFAULT);
+				if(cursorColor != "Gray"){
+					button.pegInput = PegCreator.pegConstructor(cursorColor);
+					button.redraw();
+					cursorColor = "Gray";
+					s.setCursor(Cursor.DEFAULT);
+				}
 			}
 		});
 		
