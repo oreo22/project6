@@ -258,13 +258,19 @@ public class MastermindFX extends Application{
 		    	    feedbackBoard[0][rowIndex].changeFeedback(MasterMindConsole.inputCheck(userInput));
 		    	    
 		    	   
-		    	   //Disabling previous row//
-		    	   for(int x=0; x<Params.boardWidth; x++){
-		    		   gameBoardButtons[x][rowIndex].setDisable(true);
-		    		   gameBoardButtons[x][rowIndex-1].setDisable(false);
-		    	   	}
-		    	   rowIndex -= 1;
-		    	}
+		    	   //Check to see if the amount of guesses is over
+		    	   if(rowIndex == 0){
+		    		   System.out.println("You Lost");
+		    	   }
+		    	 //Disabling previous row//
+		    	   else{
+			    	   for(int x=0; x<Params.boardWidth; x++){
+			    		   gameBoardButtons[x][rowIndex].setDisable(true);
+			    		   gameBoardButtons[x][rowIndex-1].setDisable(false);
+			    	   	}
+			    	   rowIndex -= 1;
+			    	}
+		       }
 		});
 		
 	}
