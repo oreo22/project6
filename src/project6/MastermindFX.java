@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -68,13 +69,13 @@ public class MastermindFX extends Application{
 	
 	//Made a flowPane for the feedback tiles to make it easier to change//
 	private class feedbackFlowPane extends FlowPane{
-		
+		RoundButton[] feedbackPegs = new RoundButton[Params.pegNumbertoGuess];
 		feedbackFlowPane(){
 		this.setPrefWrapLength(30);
-		this.getChildren().add(new RoundButton("Gray",15));
-		this.getChildren().add(new RoundButton("Gray",15));
-		this.getChildren().add(new RoundButton("Gray",15));
-		this.getChildren().add(new RoundButton("Gray",15));
+		for(int x=0; x<Params.pegNumbertoGuess; x++){
+			feedbackPegs[x] = new RoundButton("Gray",15);
+			this.getChildren().add(feedbackPegs[x]);
+		}
 		}
 		
 		private void changeFeedback(ArrayList<Peg> consoleFeedback){
@@ -82,9 +83,21 @@ public class MastermindFX extends Application{
 			for(int x=0; x<consoleFeedback.size(); x++){
 				Peg color = consoleFeedback.get(x);
 				if(color != null){
-					this.getChildren().set(pos++,new RoundButton(color.pegName, 15));
+					feedbackPegs[pos] = new RoundButton(color.pegName, 15);
+					this.getChildren().set(pos, feedbackPegs[pos]);
+					pos++;
+					
 				}
 			}
+		}
+		
+		private boolean checkWin(){
+			for(int x=0; x<Params.pegNumbertoGuess; x++){
+				if(this.feedbackPegs[x].pegInput.pegName.equals("White")){
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 	
@@ -137,7 +150,7 @@ public class MastermindFX extends Application{
 		pane.setPrefSize(screenSize.getWidth()/2, screenSize.getHeight()/2);
 		
 		
-		
+		Text rules = new Text();
 		
 
 		//Creating FeedBackboard and inserting it into the center board
@@ -166,12 +179,13 @@ public class MastermindFX extends Application{
 		
 		
 		//Components of MasterMind Game//
-		VBox rules = new VBox();
+		
 		
 		
 		//Adding to the right side of the screen//
 		rightBoard.add(colorKey, 0, 0);
 		rightBoard.add(check, 0, 1);
+		rightBoard.setPadding(new Insets(0,20,0,0));
 		
 		
 		
@@ -256,6 +270,10 @@ public class MastermindFX extends Application{
 		    	   
 		    	   
 		    	    feedbackBoard[0][rowIndex].changeFeedback(MasterMindConsole.inputCheck(userInput));
+		    	    if(feedbackBoard[0][rowIndex].checkWin() == true){
+		    	    	pane.setDisable(true);
+		    	    	return;
+		    	    }
 		    	    
 		    	   
 		    	   //Check to see if the amount of guesses is over
