@@ -4,13 +4,14 @@ import java.util.*;
 import project6.Pegs.*;
 
 public class MasterMindConsole {
-	private static Peg[][] gameGrid = new Peg[Params.boardWidth][Params.boardHeight];
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
+	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){ //it's public because Main is using it
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			int temp=randomIntGenerator();
 			Peg answerPeg=PegCreator.pegConstructor(PegCreator.numberToPegColor(temp));
+			answerKey.add(answerPeg);
 			if(answer.get(answerPeg.pegName)==null){
 				ArrayList<Integer> colorPositions=new ArrayList<>(Params.pegNumbertoGuess);
 				colorPositions.add(x);
