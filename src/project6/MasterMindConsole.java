@@ -14,11 +14,11 @@ public class MasterMindConsole {
 	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
 	public final static ArrayList<Peg> availableColors = new ArrayList<Peg>(){{
 		add(new RedPeg());
-		add(new YellowPeg());
+		add(new YellowPeg());/*
 		add(new OrangePeg());
 		add(new BluePeg());
 		add(new PurplePeg());
-		add(new GreenPeg());
+		add(new GreenPeg());*/
 		
 	}};
 	

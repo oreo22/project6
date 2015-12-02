@@ -1,6 +1,8 @@
 package project6;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
+import project6.Pegs.Peg;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +12,8 @@ public class Main {
 		boolean playAgain=true;
 		boolean gameplayed=false;
 		MasterMindConsole.answerGenerator();
-		AIMastermind.initialguess();
+		AIMastermind.start();
+		AIMastermind.aiGuessBasedOnFeedback(new ArrayList<Peg>());
 		Scanner s = new Scanner(System.in);
 		do{
 			System.out.println("For Console Interface, please type 'Console'");
