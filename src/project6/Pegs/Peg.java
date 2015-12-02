@@ -22,6 +22,8 @@ public abstract class Peg {
 	public String getPegName(){
 		return this.pegName;
 	}
+	public char getPegText(){  return this.pegText;  }
 	public abstract Peg copy();
+
 
 }

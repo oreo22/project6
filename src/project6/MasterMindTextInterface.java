@@ -58,8 +58,6 @@ public class MasterMindTextInterface {
 		}
 		return userInput;
 	}
-
-
 	private static Peg textToPeg(String s){
 		switch (s) {
 			case "B":
@@ -72,9 +70,36 @@ public class MasterMindTextInterface {
 				return new PurplePeg();
 			case "R":
 				return new RedPeg();
-			default:
+			case "Y":
 				return new YellowPeg();
+			default:
+				return null; //for error handling
 		}
 	}
 
+	//-------AI MASTERMIND------
+	public static void askForFeedback(){
+		for(int guessCount=0; guessCount<Params.amountOfGuesses; guessCount++){
+			System.out.println("Enter your response to my guess:");
+			Scanner s = new Scanner(System.in);
+			String input = s.nextLine();
+			input.split("");
+
+			ArrayList<Peg> userFeedback=new ArrayList<>(Params.pegNumbertoGuess);
+			String[] inputArray = input.split(""); //haven't coded exception handling when they put the wrong letter
+			for(int x=0; x<inputArray.length; x++){
+				if(inputArray[x]== "Bl"){
+					userFeedback.add(new BlackPeg());
+				}
+				else if(inputArray[x]=="W"){
+					userFeedback.add(new WhitePeg());
+				}
+			}
+			ArrayList<Peg> nextGuess=AIMastermind.aiGuessBasedOnFeedback(userFeedback);
+			for(int i=0; i<nextGuess.size(); i++){
+				System.out.println(nextGuess.get(i).getPegText());
+			}
+		}
+
+	}
 }

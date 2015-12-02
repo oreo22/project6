@@ -16,6 +16,7 @@ public class Main {
 		AIMastermind.aiGuessBasedOnFeedback(new ArrayList<Peg>());
 		Scanner s = new Scanner(System.in);
 		do{
+
 			System.out.println("For Console Interface, please type 'Console'");
 			System.out.println("For Graphical Interface, please type 'Graphical'");
 			System.out.print("Enter Interface Type: ");
