@@ -37,8 +37,6 @@ public class AIMastermind {
 	
     public static void initialguess(){
     	possibleCombinationsConstructor();
-    	System.out.println("yooo");
-        
         //if feedback is negative with no white or black pegs,
         //Guess yellow and red (also works if they give back 3 white pegs, we either guess a yellow or red)
         //if none of these colors exist in the human's arraylist, HUMAN IS CHEATING

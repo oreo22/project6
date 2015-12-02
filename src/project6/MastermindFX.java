@@ -46,7 +46,7 @@ public class MastermindFX extends Application{
 		                "-fx-min-width: "+size+"px; " +
 		                "-fx-min-height: "+size+"px; " +
 		                "-fx-max-width: "+size+"px; " +
-		                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.pegName+";"
+		                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.getPegName()+";"
 		        );
 			 
 		}
@@ -57,7 +57,7 @@ public class MastermindFX extends Application{
 	                "-fx-min-width: "+size+"px; " +
 	                "-fx-min-height: "+size+"px; " +
 	                "-fx-max-width:"+size+"px; " +
-	                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.pegName+";"
+	                "-fx-max-height: "+size+"px;" + "-fx-base: "+this.pegInput.getPegName()+";"
 	        );
 		}
 		
@@ -80,7 +80,7 @@ public class MastermindFX extends Application{
 			for(int x=0; x<consoleFeedback.size(); x++){
 				Peg color = consoleFeedback.get(x);
 				if(color != null){
-					feedbackPegs[pos] = new RoundButton(color.pegName, 15);
+					feedbackPegs[pos] = new RoundButton(color.getPegName(), 15);
 					this.getChildren().set(pos, feedbackPegs[pos]);
 					pos++;
 					
@@ -90,7 +90,7 @@ public class MastermindFX extends Application{
 		
 		private boolean checkWin(){
 			for(int x=0; x<Params.pegNumbertoGuess; x++){
-				if(!this.feedbackPegs[x].pegInput.pegName.equals("Black")){
+				if(!this.feedbackPegs[x].pegInput.getPegName().equals("Black")){
 					return false;
 				}
 			}
@@ -122,7 +122,7 @@ public class MastermindFX extends Application{
 		winOrLose.setWrappingWidth(120);
 		HBox answerKey = new HBox();
 		for(int x=0; x<MasterMindConsole.answerKey.size(); x++){
-			answerKey.getChildren().add(new RoundButton(MasterMindConsole.answerKey.get(x).pegName, 30));
+			answerKey.getChildren().add(new RoundButton(MasterMindConsole.answerKey.get(x).getPegName(), 30));
 		}
 		
 		playAgainButton.setText("Play Again");
@@ -301,7 +301,7 @@ public class MastermindFX extends Application{
 		    	   ArrayList<Peg> userInput = new ArrayList<Peg>();
 		    	   //Check to see if any of the buttons in the same row are gray//
 		    	   for(int x=0; x<Params.boardWidth; x++){
-		    		   if(gameBoardButtons[x][rowIndex].pegInput.pegName.equals("Gray")){
+		    		   if(gameBoardButtons[x][rowIndex].pegInput.getPegName().equals("Gray")){
 		    			   return;
 		    		   }
 		    		   userInput.add(gameBoardButtons[x][rowIndex].pegInput);
