@@ -1,6 +1,7 @@
 package project6;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import project6.Pegs.*;
 
@@ -9,13 +10,35 @@ import project6.Pegs.*;
  */
 
 public class AIMastermind {
-
+	static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
+	
+	
+	private static void possibleCombinationsConstructorRecur(ArrayList<Peg> guess, int pos){
+		if(pos==-1){
+			return;
+		}
+		for(int x=0; x<MasterMindConsole.availableColors.size(); x++){
+			guess.set(pos, MasterMindConsole.availableColors.get(x));
+			possibleCombinations.add(guess);
+			possibleCombinationsConstructorRecur(guess, pos-1);
+		}
+		
+	}
+	
+	public static void possibleCombinationsConstructor(){
+		ArrayList<Peg> guess = new ArrayList<Peg>(Params.boardWidth);
+    	for(int x=0; x<guess.size(); x++){
+    		guess.set(x, MasterMindConsole.availableColors.get(0));
+    	}
+    	possibleCombinationsConstructorRecur(guess, guess.size()-1);
+	}
+	
+	
+	
     public static void initialguess(){
-        ArrayList<Peg> initialguess=new ArrayList<Peg>(Params.pegNumbertoGuess);
-        initialguess.add(new BluePeg());
-        initialguess.add(new GreenPeg());
-        initialguess.add(new OrangePeg());
-        initialguess.add(new PurplePeg());
+    	possibleCombinationsConstructor();
+    	System.out.println("yooo");
+        
         //if feedback is negative with no white or black pegs,
         //Guess yellow and red (also works if they give back 3 white pegs, we either guess a yellow or red)
         //if none of these colors exist in the human's arraylist, HUMAN IS CHEATING

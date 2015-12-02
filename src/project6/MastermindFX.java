@@ -183,6 +183,11 @@ public class MastermindFX extends Application{
 		
 		
 		//Making all the different buttons the user can click to input into board//
+/*		for(int x=0; x<MasterMindConsole.availableColors.size(); x++){
+			RoundButton newButton = new RoundButton(MasterMindConsole.availableColors.get(x).pegName, 30);
+			colorKey.getChildren().add(newButton);
+		}*/
+		
 	      RoundButton blueRoundButton = new RoundButton("Blue", 30);
 	      RoundButton redRoundButton = new RoundButton("Red", 30);
 	      RoundButton yellowRoundButton = new RoundButton("Yellow", 30);

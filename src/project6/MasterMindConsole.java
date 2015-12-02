@@ -3,9 +3,27 @@ import java.util.*;
 
 import project6.Pegs.*;
 
+
+
+
+
+
+
 public class MasterMindConsole {
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
+	public final static ArrayList<Peg> availableColors = new ArrayList<Peg>(){{
+		add(new RedPeg());
+		add(new YellowPeg());
+		add(new OrangePeg());
+		add(new BluePeg());
+		add(new PurplePeg());
+		add(new GreenPeg());
+		
+	}};
+	
+	
+	
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){ //it's public because Main is using it
 		for(int x=0; x<Params.pegNumbertoGuess; x++){

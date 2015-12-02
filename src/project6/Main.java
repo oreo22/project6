@@ -10,7 +10,7 @@ public class Main {
 		boolean playAgain=true;
 		boolean gameplayed=false;
 		MasterMindConsole.answerGenerator();
-
+		AIMastermind.initialguess();
 		Scanner s = new Scanner(System.in);
 		do{
 			System.out.println("For Console Interface, please type 'Console'");
