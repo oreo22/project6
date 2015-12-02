@@ -48,11 +48,11 @@ public class AIMastermind {
 		}
 	}
 	
-	private static void removeIncorrectPositionCombinations(){
+	private static void removeIncorrectPositionCombinations(int blackPegCount){
+		int correctPosition = 0;
 		Iterator<ArrayList<Peg>> itr2 = possibleCombinations.iterator();
 		while(itr2.hasNext()){
-			boolean noContains=true;
-			
+			correctPosition = 0;
 			ArrayList <Peg> victim=itr2.next();
 			
 			for(int x=0; x<victim.size(); x++){
@@ -61,13 +61,13 @@ public class AIMastermind {
 					if(victim.get(y).equals(aiGuess.get(x))){indexList.add(y);}
 				}
 				if(indexList.contains(x)){
-					noContains = false;
-					break;
+					correctPosition++;
 				}
 			}
-			if(noContains == true){
+			if(correctPosition < blackPegCount){
 				itr2.remove();
 			}
+			
 		}
 	}
 	
@@ -102,22 +102,21 @@ public class AIMastermind {
     	for(int x=(Params.pegNumbertoGuess/2); x< Params.pegNumbertoGuess; x++){
     		initialguess.add(MasterMindConsole.availableColors.get(1));
     	}
-    	return initialguess;
+    	aiGuess = initialguess;
+    	return aiGuess;
     }
     
     public static ArrayList<Peg> aiGuessBasedOnFeedback(int blackPegCount, int whitePegCount){
 		if(blackPegCount >=1){
-			removeIncorrectPositionCombinations();
+			removeIncorrectPositionCombinations(blackPegCount);
 		}
-    	else if((blackPegCount+whitePegCount) >=1){
+    	if((blackPegCount+whitePegCount) >=1){
     		removeNonIntersections();
     	}
     	else if((blackPegCount+whitePegCount) == 0){
     		removeCurrentColors();
     	}
-    	else if(blackPegCount >=1){
-    		removeIncorrectPositionCombinations();
-    	}
+		possibleCombinations.remove(aiGuess);
     	aiGuess = possibleCombinations.iterator().next();
 		return aiGuess;
     	
