@@ -7,15 +7,27 @@ import java.util.Scanner;
 public class MasterMindTextInterface {
 	
 	public static void launch(){
+		boolean correctInput = true;
+		ArrayList<Peg> userInput = null;
 		System.out.println("\nYou're in the Text-based console!\n");
 		for(int guessCount=0; guessCount<Params.amountOfGuesses; guessCount++){
+			
+		
 			System.out.println("You have "+ (Params.amountOfGuesses-guessCount) +" guesses left.");
+			do{
+		    correctInput = true;
 			System.out.println("What is your next guess?");
 			System.out.println("Type in the characters for your guess and press enter.");
 			System.out.print("Enter your guess: ");
 			Scanner s = new Scanner(System.in);
 			String input = s.nextLine();
-			ArrayList<Peg> userInput=MasterMindTextInterface.creatingUserInput(input);
+			userInput=MasterMindTextInterface.creatingUserInput(input);
+			if(userInput == null){
+				System.out.println("->INVALID INPUT");
+				correctInput = false;
+			}
+			
+			}while(correctInput == false);
 			ArrayList<Peg> pegAnswer=MasterMindConsole.inputCheck(userInput);
 			
 			if(checkFeedbackForConsole(pegAnswer)){
@@ -57,7 +69,11 @@ public class MasterMindTextInterface {
 		ArrayList<Peg> userInput=new ArrayList<>(Params.pegNumbertoGuess);
 		String[] inputArray = input.split(""); //haven't coded exception handling when they put the wrong letter
 		for(int x=0; x<inputArray.length; x++){
-			userInput.add(textToPeg(inputArray[x]));
+			Peg covertedPeg = textToPeg(inputArray[x]);
+			if(covertedPeg == null){
+				return null;
+			}
+			userInput.add(covertedPeg);
 		}
 		return userInput;
 	}

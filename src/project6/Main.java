@@ -10,11 +10,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		boolean playAgain=true;
-		boolean gameplayed=false;
+		boolean correctInput = true;
 		MasterMindConsole.answerGenerator();
 		Scanner s = new Scanner(System.in);
-		
 			System.out.println("Welcome to Mastermind!");
+			do{
+			correctInput = true;
 			System.out.println("For Console Interface, please type 'Console'");
 			System.out.println("For Graphical Interface, please type 'Graphical'");
 			System.out.print("Enter Interface Type: ");
@@ -34,8 +35,10 @@ public class Main {
 				MastermindFX.launch(MastermindFX.class, args);
 			}
 			else{
-				System.out.println("Incorrect input. Please try again.");
+				System.out.println("Incorrect input. Please try again.\n");
+				correctInput = false;
 			}
+		}while(correctInput == false);
 
 	}
 
