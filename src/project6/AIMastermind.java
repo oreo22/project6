@@ -91,11 +91,9 @@ public class AIMastermind {
     	}
     	possibleCombinationsConstructorRecur(guess, guess.size()-1);
 	}
-	
-	
-	
-	
-    private static ArrayList<Peg> initialguess(){
+
+	//-----First AI guess-----
+    public static ArrayList<Peg> initialguess(){
     	possibleCombinationsConstructor();
     	ArrayList<Peg> initialguess=new ArrayList(Params.pegNumbertoGuess);
     	for(int x=0; x<(Params.pegNumbertoGuess/2); x++){
@@ -105,11 +103,6 @@ public class AIMastermind {
     		initialguess.add(MasterMindConsole.availableColors.get(1));
     	}
     	return initialguess;
-    }
-    
-    public static void start(){
-    	aiGuess=initialguess();
-    	
     }
     
     public static ArrayList<Peg> aiGuessBasedOnFeedback(ArrayList<Peg> feedback){

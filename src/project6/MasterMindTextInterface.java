@@ -81,28 +81,31 @@ public class MasterMindTextInterface {
 	}
 
 	//-------AI MASTERMIND------
-	public static void askForFeedback(){
-		for(int guessCount=0; guessCount<Params.amountOfGuesses; guessCount++){
+	public static void askForFeedback() {
+		printAIGuess(AIMastermind.initialguess());
+		for (int guessCount = 0; guessCount < Params.amountOfGuesses; guessCount++) {
 			System.out.println("Enter your response to my guess:");
 			Scanner s = new Scanner(System.in);
 			String input = s.nextLine();
 			input.split("");
 
-			ArrayList<Peg> userFeedback=new ArrayList<>(Params.pegNumbertoGuess);
+			ArrayList<Peg> userFeedback = new ArrayList<>(Params.pegNumbertoGuess);
 			String[] inputArray = input.split(""); //haven't coded exception handling when they put the wrong letter
-			for(int x=0; x<inputArray.length; x++){
-				if(inputArray[x]== "Bl"){
+			for (int x = 0; x < inputArray.length; x++) {
+				if (inputArray[x] == "Bl") {
 					userFeedback.add(new BlackPeg());
-				}
-				else if(inputArray[x]=="W"){
+				} else if (inputArray[x] == "W") {
 					userFeedback.add(new WhitePeg());
 				}
 			}
-			ArrayList<Peg> nextGuess=AIMastermind.aiGuessBasedOnFeedback(userFeedback);
-			for(int i=0; i<nextGuess.size(); i++){
-				System.out.println(nextGuess.get(i).getPegText());
-			}
+			ArrayList<Peg> nextGuess = AIMastermind.aiGuessBasedOnFeedback(userFeedback);
+			printAIGuess(nextGuess);
 		}
-
+	}
+	private static void printAIGuess(ArrayList<Peg> aiGuess){
+		for (int i = 0; i < aiGuess.size(); i++) {
+			System.out.println(aiGuess.get(i).getPegText());
+		}
 	}
 }
+
