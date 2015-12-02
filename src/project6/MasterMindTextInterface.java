@@ -1,4 +1,5 @@
 package project6;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import project6.Pegs.*;
 
 import java.util.ArrayList;
@@ -99,17 +100,26 @@ public class MasterMindTextInterface {
 	//-------AI MASTERMIND------
 	public static void aiVsHuman() {
 		printAIGuess(AIMastermind.initialguess());
+		int guess=0;
 		Scanner s = new Scanner(System.in);
 		for (int guessCount = 0; guessCount < Params.amountOfGuesses; guessCount++) {
 			System.out.println("How many White Pegs are there?:");
 			int whitePegsCount= s.nextInt();
 			System.out.println("How many Black Pegs are there?:");
 			int blackPegsCount= s.nextInt();
+			if(blackPegsCount == 4){
+				System.out.println("AI Wins! Computers are better than Humans");
+				return;
+			}
 			ArrayList<Peg> nextGuess = AIMastermind.aiGuessBasedOnFeedback(blackPegsCount,whitePegsCount);
 			printAIGuess(nextGuess);
+			guess++;
+			System.out.println("\nI guessed "+guess+" times");
 		}
 	}
+
 	private static void printAIGuess(ArrayList<Peg> aiGuess){
+		int guess=0;
 		for (int i = 0; i < aiGuess.size(); i++) {
 			System.out.print(aiGuess.get(i).getPegText());
 		}

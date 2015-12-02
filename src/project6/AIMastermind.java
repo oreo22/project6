@@ -16,14 +16,28 @@ public class AIMastermind {
 	private static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
 	
 	
-	private static void removeNonIntersections(){ //remove the colors that were in aiGuess
-/*		for(int x=0; possibleCombinations.size(); x++){
-			possibleCombinations.iterator().hasNext()
-		}*/
+	private static void removeNonIntersections(int PegsCount){ //remove the colors that were in aiGuess
+		int correctColor = 0;
+		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
+		while(itr.hasNext()){
+			ArrayList <Peg> victim=itr.next();
+			ArrayList <Peg> victimTemp = new ArrayList<Peg>(victim);
+			for(int i=0; i<aiGuess.size(); i++){
+				if(victimTemp.contains(aiGuess.get(i))){
+					victimTemp.remove(aiGuess.get(i));
+					correctColor+=1;
+				}
+			}
+			if(correctColor<PegsCount){
+				itr.remove();
+			}
+		}
+
+	/*	int correctColor = 0;
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
 		while(itr.hasNext()){
 			boolean noContains=true;
-			
+
 			ArrayList <Peg> victim=itr.next();
 			for(int i=0; i<aiGuess.size(); i++){
 				if(victim.contains(aiGuess.get(i))){
@@ -33,7 +47,7 @@ public class AIMastermind {
 			if(noContains==true){
 				itr.remove();
 			}
-		}
+		}*/
 	}
 	
 	private static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
@@ -43,18 +57,19 @@ public class AIMastermind {
 			for(int i=0; i<aiGuess.size(); i++){
 				if(victim.contains(aiGuess.get(i))){
 					itr.remove();
+					break;
 				}
 			}
 		}
 	}
-	
+
 	private static void removeIncorrectPositionCombinations(int blackPegCount){
 		int correctPosition = 0;
 		Iterator<ArrayList<Peg>> itr2 = possibleCombinations.iterator();
 		while(itr2.hasNext()){
 			correctPosition = 0;
 			ArrayList <Peg> victim=itr2.next();
-			
+
 			for(int x=0; x<victim.size(); x++){
 				ArrayList<Integer> indexList = new ArrayList<Integer>();
 				for(int y=0; y<victim.size(); y++){
@@ -107,12 +122,15 @@ public class AIMastermind {
     }
     
     public static ArrayList<Peg> aiGuessBasedOnFeedback(int blackPegCount, int whitePegCount){
-		if(blackPegCount >=1){
+		if(blackPegCount >= 1){
 			removeIncorrectPositionCombinations(blackPegCount);
 		}
-    	if((blackPegCount+whitePegCount) >=1){
-    		removeNonIntersections();
+    	if(whitePegCount >= 1){
+    		removeNonIntersections(whitePegCount);
     	}
+		if((whitePegCount+blackPegCount) == 4){
+			removeNonIntersections(whitePegCount+blackPegCount);
+		}
     	else if((blackPegCount+whitePegCount) == 0){
     		removeCurrentColors();
     	}

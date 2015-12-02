@@ -16,16 +16,16 @@ public class Main {
 			System.out.println("Welcome to Mastermind!");
 			do{
 			correctInput = true;
-			System.out.println("For Console Interface, please type 'Console'");
+			System.out.println("For Text Interface, please type 'Text'");
 			System.out.println("For Graphical Interface, please type 'Graphical'");
 			System.out.print("Enter Interface Type: ");
 			String consoleType=s.nextLine();
-			if(consoleType.equals("Console") || consoleType.equals("console")){
+			if(consoleType.equals("Text") || consoleType.equals("text")){
 				do{
                     System.out.println("To guess against the AI, please type '1'"); //Human Vs. AI
                     System.out.println("To make the AI guess, please type '2'"); //AI Vs. Human
                     System.out.println("Choose the Playing Mode");
-                    String modeType=s.nextLine();
+                    String modeType=s.next();
                     if(modeType.equals("1")){
                         MasterMindTextInterface.HumanvsComputerlaunch();
                     }
@@ -33,7 +33,7 @@ public class Main {
                         MasterMindTextInterface.aiVsHuman();
                     }
                     else{
-                        System.out.println("Incorrect input. Please try again.\n");
+                        System.out.println(modeType + " Incorrect input. Please try again.\n");
                         correctInput = false;
                     }
 					System.out.println("Play Again? (Y/N)");
