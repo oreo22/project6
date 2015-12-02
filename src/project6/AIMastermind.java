@@ -133,7 +133,7 @@ public class AIMastermind {
     		removeCurrentColors();
     	}
     	else if(blackPegCount >=1){
-    		
+    		removeIncorrectPositionCombinations();
     	}
     	aiGuess = possibleCombinations.iterator().next();
 		return aiGuess;

@@ -7,13 +7,17 @@ import java.util.Scanner;
 public class MasterMindTextInterface {
 	
 	public static void launch(){
-		System.out.println("You're in the Text-based console!");
+		System.out.println("\nYou're in the Text-based console!\n");
 		for(int guessCount=0; guessCount<Params.amountOfGuesses; guessCount++){
-			System.out.println("Please enter your guess: ");
+			System.out.println("You have "+ (Params.amountOfGuesses-guessCount) +" guesses left.");
+			System.out.println("What is your next guess?");
+			System.out.println("Type in the characters for your guess and press enter.");
+			System.out.print("Enter your guess: ");
 			Scanner s = new Scanner(System.in);
 			String input = s.nextLine();
 			ArrayList<Peg> userInput=MasterMindTextInterface.creatingUserInput(input);
 			ArrayList<Peg> pegAnswer=MasterMindConsole.inputCheck(userInput);
+			
 			if(checkFeedbackForConsole(pegAnswer)){
 				Params.gameWin=true;
 				break;
@@ -44,8 +48,7 @@ public class MasterMindTextInterface {
 			return true;
 		}
 		else{
-			System.out.println("White Pegs: " + numberWhitePegs);
-			System.out.println("Black Pegs: " + numberBlackPegs);
+			System.out.println("White Pegs: " + numberWhitePegs + " Black Pegs: " + numberBlackPegs+"\n");
 			return false;
 		}
 	}
