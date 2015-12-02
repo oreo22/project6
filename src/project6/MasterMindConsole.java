@@ -3,12 +3,6 @@ import java.util.*;
 
 import project6.Pegs.*;
 
-
-
-
-
-
-
 public class MasterMindConsole {
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
@@ -30,13 +24,13 @@ public class MasterMindConsole {
 			int temp=randomIntGenerator();
 			Peg answerPeg=PegCreator.pegConstructor(PegCreator.numberToPegColor(temp));
 			answerKey.add(answerPeg);
-			if(answer.get(answerPeg.pegName)==null){
+			if(answer.get(answerPeg.getPegName())==null){
 				ArrayList<Integer> colorPositions=new ArrayList<>(Params.pegNumbertoGuess);
 				colorPositions.add(x);
-				answer.put(answerPeg.pegName, colorPositions);
+				answer.put(answerPeg.getPegName(), colorPositions);
 			}
 			else {
-				answer.get(answerPeg.pegName).add(x);
+				answer.get(answerPeg.getPegName()).add(x);
 			}
 		}
 	}
@@ -55,7 +49,7 @@ public class MasterMindConsole {
 	//	ArrayList<Integer> countOfEachPeg=new ArrayList<>(Params.pegNumbertoGuess);
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			Peg test1=userInput.get(x);
-			checker=answercopy.get(test1.pegName);
+			checker=answercopy.get(test1.getPegName());
 			if(checker==null || checker.size()<=0){ //if color doesn't exist in the answer
 				pegAnswer.add(x,null);
 			}
@@ -65,7 +59,7 @@ public class MasterMindConsole {
 					if(((Integer)x).equals(checker.get(i))){ //same color and position
 						pegAnswer.add(x,new BlackPeg());
 						checkedFlag=true;
-						answercopy.get(test1.pegName).remove(i); // remove the index already found
+						answercopy.get(test1.getPegName()).remove(i); // remove the index already found
 						break;
 						//
 					}
@@ -77,7 +71,7 @@ public class MasterMindConsole {
 		}
 		for(int x=0; x<pegAnswer.size(); x++){
 			if(pegAnswer.get(x) instanceof WhitePeg){
-				if((answercopy.get(userInput.get(x).pegName).size()<=0)){
+				if((answercopy.get(userInput.get(x).getPegName()).size()<=0)){
 					pegAnswer.set(x,null);
 				}
 			}

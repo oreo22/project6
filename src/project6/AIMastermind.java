@@ -105,10 +105,6 @@ public class AIMastermind {
     		initialguess.add(MasterMindConsole.availableColors.get(1));
     	}
     	return initialguess;
-        
-        //if feedback is negative with no white or black pegs,
-        //Guess yellow and red (also works if they give back 3 white pegs, we either guess a yellow or red)
-        //if none of these colors exist in the human's arraylist, HUMAN IS CHEATING
     }
     
     public static void start(){
@@ -117,7 +113,7 @@ public class AIMastermind {
     }
     
     public static ArrayList<Peg> aiGuessBasedOnFeedback(ArrayList<Peg> feedback){
-    	int blackPegCount=0; int whitePegCount=0;
+		int blackPegCount=0; int whitePegCount=0;
     	for(int i=0; i<feedback.size(); i++){
     		if(feedback.get(i) instanceof WhitePeg){
     			whitePegCount++;
@@ -126,7 +122,10 @@ public class AIMastermind {
     			blackPegCount++;
     		}
     	}
-    	if((blackPegCount+whitePegCount) >=1){
+		if(blackPegCount >=1){
+			removeIncorrectPositionCombinations();
+		}
+    	else if((blackPegCount+whitePegCount) >=1){
     		removeNonIntersections();
     	}
     	else if((blackPegCount+whitePegCount) == 0){
