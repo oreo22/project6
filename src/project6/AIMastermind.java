@@ -122,14 +122,14 @@ public class AIMastermind {
     			blackPegCount++;
     		}
     	}
-    	if((blackPegCount+whitePegCount) >=1){
+		if(blackPegCount >=1){
+			removeIncorrectPositionCombinations();
+		}
+    	else if((blackPegCount+whitePegCount) >=1){
     		removeNonIntersections();
     	}
     	else if((blackPegCount+whitePegCount) == 0){
     		removeCurrentColors();
-    	}
-    	else if(blackPegCount >=1){
-    		
     	}
     	aiGuess = possibleCombinations.iterator().next();
 		return aiGuess;
