@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class MasterMindTextInterface {
 	
-	public static void launch(){
+	public static void HumanvsComputerlaunch(){
 		boolean correctInput = true;
 		ArrayList<Peg> userInput = null;
 		System.out.println("\nYou're in the Text-based console!\n");
@@ -97,31 +97,37 @@ public class MasterMindTextInterface {
 	}
 
 	//-------AI MASTERMIND------
-	public static void askForFeedback() {
+	public static void aiVsHuman() {
 		printAIGuess(AIMastermind.initialguess());
 		for (int guessCount = 0; guessCount < Params.amountOfGuesses; guessCount++) {
-			System.out.println("Enter your response to my guess:");
+			System.out.println("How many White Pegs are there?:");
 			Scanner s = new Scanner(System.in);
 			String input = s.nextLine();
-			input.split("");
+			int blackPegsCount=(int) input.split("");
 
-			ArrayList<Peg> userFeedback = new ArrayList<>(Params.pegNumbertoGuess);
+
+			//ArrayList<Peg> userFeedback = new ArrayList<>(Params.pegNumbertoGuess);
+			int blackPegsCount=0; int whitePegsCount=0;
 			String[] inputArray = input.split(""); //haven't coded exception handling when they put the wrong letter
 			for (int x = 0; x < inputArray.length; x++) {
 				if (inputArray[x] == "Bl") {
-					userFeedback.add(new BlackPeg());
+					//userFeedback.add(new BlackPeg());
+					blackPegsCount++;
 				} else if (inputArray[x] == "W") {
-					userFeedback.add(new WhitePeg());
+					//userFeedback.add(new WhitePeg());
+					whitePegsCount++;
 				}
 			}
-			ArrayList<Peg> nextGuess = AIMastermind.aiGuessBasedOnFeedback(userFeedback);
+			ArrayList<Peg> nextGuess = AIMastermind.aiGuessBasedOnFeedback(blackPegsCount,whitePegsCount);
 			printAIGuess(nextGuess);
 		}
 	}
 	private static void printAIGuess(ArrayList<Peg> aiGuess){
 		for (int i = 0; i < aiGuess.size(); i++) {
-			System.out.println(aiGuess.get(i).getPegText());
+			System.out.print(aiGuess.get(i).getPegText());
+
 		}
+		System.out.println("");
 	}
 }
 

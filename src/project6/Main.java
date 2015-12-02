@@ -22,7 +22,20 @@ public class Main {
 			String consoleType=s.nextLine();
 			if(consoleType.equals("Console") || consoleType.equals("console")){
 				do{
-					MasterMindTextInterface.launch();
+                    System.out.println("To guess against the AI, please type '1'"); //Human Vs. AI
+                    System.out.println("To make the AI guess, please type '2'"); //AI Vs. Human
+                    System.out.println("Choose the Playing Mode");
+                    String modeType=s.nextLine();
+                    if(modeType.equals("1")){
+                        MasterMindTextInterface.HumanvsComputerlaunch();
+                    }
+                    else if(modeType.equals("2")){
+                        MasterMindTextInterface.aiVsHuman();
+                    }
+                    else{
+                        System.out.println("Incorrect input. Please try again.\n");
+                        correctInput = false;
+                    }
 					System.out.println("Play Again? (Y/N)");
 					String play = s.next();
 					if (play.equals("N")) {

@@ -105,16 +105,7 @@ public class AIMastermind {
     	return initialguess;
     }
     
-    public static ArrayList<Peg> aiGuessBasedOnFeedback(ArrayList<Peg> feedback){
-		int blackPegCount=0; int whitePegCount=0;
-    	for(int i=0; i<feedback.size(); i++){
-    		if(feedback.get(i) instanceof WhitePeg){
-    			whitePegCount++;
-    		}
-    		else if(feedback.get(i) instanceof BlackPeg){
-    			blackPegCount++;
-    		}
-    	}
+    public static ArrayList<Peg> aiGuessBasedOnFeedback(int blackPegCount, int whitePegCount){
 		if(blackPegCount >=1){
 			removeIncorrectPositionCombinations();
 		}
