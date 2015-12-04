@@ -36,6 +36,11 @@ public class MasterMindTextInterface {
 				break;
 			}
 		}
+		System.out.println("The answer was: ");
+		for(int x=0; x<MasterMindConsole.answerKey.size(); x++){
+			System.out.print(MasterMindConsole.answerKey.get(x).getPegText());
+		}
+		System.out.println();
 		if(Params.gameWin==false){
 			System.out.println("Ha. Ha. Ha. You Lose.");
 		}
@@ -94,6 +99,10 @@ public class MasterMindTextInterface {
 				return;
 			}
 			ArrayList<Peg> nextGuess = AIMastermind.aiGuessBasedOnFeedback(blackPegsCount,whitePegsCount);
+			if(nextGuess == null){
+				System.out.println("You Cheated!");
+				return;
+			}
 			printAIGuess(nextGuess);
 			guess++;
 			System.out.println("\nI guessed "+guess+" times");

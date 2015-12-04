@@ -27,10 +27,12 @@ import project6.Pegs.Peg;
 public class MastermindFX extends Application{
 	private RoundButton[][] gameBoardButtons = new RoundButton[Params.boardWidth][Params.boardHeight];
 	private feedbackFlowPane[][] feedbackBoard = new feedbackFlowPane[1][Params.boardHeight];
+	private RoundButton[] humanFeedback = new RoundButton[Params.pegNumbertoGuess];
 	
 	double BUTTON_PADDING = 30;
-	private static String cursorColor = "gray";
+	private static String cursorColor = "Gray";
 	private static Scene s;
+	private static Scene aiDecoderScene;
 	private int rowIndex = Params.boardHeight-1;
 	private static Text winOrLose = new Text("");
 	
@@ -75,6 +77,14 @@ public class MastermindFX extends Application{
 		}
 		}
 		
+		feedbackFlowPane(int size){
+		this.setPrefWrapLength(size*4);
+		for(int x=0; x<Params.pegNumbertoGuess; x++){
+			feedbackPegs[x] = new RoundButton("Gray", size);
+			this.getChildren().add(feedbackPegs[x]);
+		}
+		}
+		
 		private void changeFeedback(ArrayList<Peg> consoleFeedback){
 			int pos=0;
 			for(int x=0; x<consoleFeedback.size(); x++){
@@ -108,9 +118,10 @@ public class MastermindFX extends Application{
 		
 		//Screen//
 		BorderPane pane = new BorderPane();
+		BorderPane startupPane = new BorderPane();
 		
 		GridPane gameCompletedPane = new GridPane();
-		
+		GridPane startupGrid = new GridPane();
 		
 		//Game Completed Screen//
 		Button playAgainButton = new Button();
@@ -121,9 +132,6 @@ public class MastermindFX extends Application{
 		winOrLose.setTextAlignment(TextAlignment.CENTER);
 		winOrLose.setWrappingWidth(120);
 		HBox answerKey = new HBox();
-		for(int x=0; x<MasterMindConsole.answerKey.size(); x++){
-			answerKey.getChildren().add(new RoundButton(MasterMindConsole.answerKey.get(x).getPegName(), 30));
-		}
 		
 		playAgainButton.setText("Play Again");
 		playAgainButton.setMinWidth(120);
@@ -136,8 +144,22 @@ public class MastermindFX extends Application{
 		
 		//-----------------End of Game Completed---------//
 		
+		//Startup Screen//
+		Button aiDecoderMode = new Button();
+		Button humanDecoderMode = new Button();
+		Text welcome = new Text("Welcome to MasterMind! Please Select an Option Below.");
+		aiDecoderMode.setText("AI as Decoder");
+		humanDecoderMode.setText("Human as Decoder");
+		welcome.setTextAlignment(TextAlignment.CENTER);
+		startupGrid.add(welcome, 0, 0);
+		startupGrid.add(aiDecoderMode, 0, 1);
+		startupGrid.add(humanDecoderMode, 1, 1);
+		startupGrid.setAlignment(Pos.CENTER);
+		startupPane.setCenter(startupGrid);
+		startupPane.setMinSize(screenSize.getWidth()/2, screenSize.getHeight()/2);
+		//End of Startup Screen
 		
-		
+
 		//GameBoard initialization//
 		GridPane gameBoard = new GridPane();
 		gameBoard.setVgap(BUTTON_PADDING);
@@ -149,11 +171,13 @@ public class MastermindFX extends Application{
 		rightBoard.setAlignment(Pos.CENTER);
 		
 		
+		
 		//Setting up Scene//
 		s = new Scene(pane);
 		
 		
-		
+		//Beginning Menu scene
+		Scene startupScene = new Scene(startupPane);
 		
 		
 		//Creating the gameboard of buttons//
@@ -170,10 +194,29 @@ public class MastermindFX extends Application{
 		}
 		
 		
+		//Creating AIDecoder Mode Screen//
+		
+		BorderPane aiDecoderPane = new BorderPane();
+		
+		aiDecoderPane.setPrefSize(screenSize.getWidth()/2, screenSize.getHeight()/2);
+		aiDecoderScene = new Scene(aiDecoderPane);
+		
+		
+		
+		
+		
+		
+		
+		
 		//Creating Check Button//
 		Button check = new Button();
 		check.setText("Check");
 		check.setMinWidth(90);
+		
+		//Creating Submit Button//
+		Button submit = new Button();
+		submit.setText("Submit Feedback");
+		submit.setMinWidth(120);
 		
 
 		//Flowpane for the colors the user can pick//
@@ -201,41 +244,33 @@ public class MastermindFX extends Application{
 	      colorKey.getChildren().add(orangeRoundButton);
 	      colorKey.getChildren().add(purpleRoundButton);
 		
-		//Making the list of rules on the left side//
-		VBox leftBoard = new VBox();
-		leftBoard.getChildren().add(new Text("MasterMind Rules:"));
-		leftBoard.getChildren().add(new Text("Try to guess the correct " + Params.pegNumbertoGuess +" Peg combination!"));
-		leftBoard.getChildren().add(new Text("Choose a colored Peg from the key on the right side."));
-		leftBoard.getChildren().add(new Text("Click the spot on the game board you think the Peg goes"));
-		leftBoard.getChildren().add(new Text("Once you finish placing your combination, click 'Check'"));
-		leftBoard.getChildren().add(new Text("Keep Going! You have " + rowIndex+1 + " guesses left!"));
-		
 
 		//Creating FeedBackboard and inserting it into the center board
 		for(int y=0; y<feedbackBoard[0].length; y++){
 			feedbackBoard[0][y] = new feedbackFlowPane();
+			
 			gameBoard.add(feedbackBoard[0][y], Params.boardWidth, y);
 		}
 		
-		
-		
-		
-		
-		//Adding to the right side of the screen//
-		rightBoard.add(colorKey, 0, 0);
-		rightBoard.add(check, 0, 1);
-		rightBoard.setPadding(new Insets(0,20,0,0));
-		
-		leftBoard.setPadding(new Insets(0,20,0,0));
-		
+
+		//Creating FeedbackKey//
+		HBox humanFeedbackKey = new HBox();
+		for(int x=0; x< Params.pegNumbertoGuess; x++){
+			humanFeedback[x] = new RoundButton("Gray", 30);
+			registerFeedbackButton(humanFeedback[x]);
+			humanFeedbackKey.getChildren().add(humanFeedback[x]);
+		}
+		HBox whiteBlackKey = new HBox();
+		RoundButton whiteRoundButton = new RoundButton("White", 30);
+	    RoundButton blackRoundButton = new RoundButton("Black", 30);
+	    whiteBlackKey.getChildren().add(whiteRoundButton);
+	    whiteBlackKey.getChildren().add(blackRoundButton);
 		
 		//It's Showtime!//
-		//pane.setLeft(leftBoard);
-		pane.setCenter(gameBoard);
-		pane.setRight(rightBoard);
+		
 		
 		primaryStage.setTitle("MasterMind");
-		primaryStage.setScene(s);
+		primaryStage.setScene(startupScene);
 		primaryStage.show();
 		
 		
@@ -289,10 +324,60 @@ public class MastermindFX extends Application{
 		    	   cursorColor = "Purple";
 		    	   }
 		});
+		whiteRoundButton.setOnAction(new EventHandler<ActionEvent>() {
+		       @Override
+		       public void handle(ActionEvent e) {
+		    	   Image image = new Image("/images/whiteCursor.png");	
+		    	   aiDecoderScene.setCursor(new ImageCursor(image));
+		    	   cursorColor = "White";
+		    	   }
+		});
+		blackRoundButton.setOnAction(new EventHandler<ActionEvent>() {
+		       @Override
+		       public void handle(ActionEvent e) {
+		    	   Image image = new Image("/images/blackCursor.png");	
+		    	   aiDecoderScene.setCursor(new ImageCursor(image));
+		    	   cursorColor = "Black";
+		    	   }
+		});
 		
 		
+		humanDecoderMode.setOnAction(new EventHandler<ActionEvent>(){
+		       @Override
+		       public void handle(ActionEvent e) {
+		    	   System.out.println(MasterMindConsole.answerKey);
+		   		for(int x=0; x<MasterMindConsole.answerKey.size(); x++){
+					answerKey.getChildren().add(new RoundButton(MasterMindConsole.answerKey.get(x).getPegName(), 30));
+				}
+				rightBoard.add(colorKey, 0, 0);
+				rightBoard.add(check, 0, 1);
+				rightBoard.setPadding(new Insets(0,20,0,0));
+				 pane.setRight(rightBoard);
+				 pane.setCenter(gameBoard);
+		    	 primaryStage.setScene(s);
+		    	   	}
+		});
 		
-		
+		aiDecoderMode.setOnAction(new EventHandler<ActionEvent>(){
+		       @Override
+		       public void handle(ActionEvent e) {
+		    	   rightBoard.add(humanFeedbackKey, 0, 0);
+		    	   rightBoard.add(whiteBlackKey, 0, 1);
+		    	   rightBoard.add(submit, 0, 2);
+		    	   rightBoard.setPadding(new Insets(0,20,0,0));
+		    	   aiDecoderPane.setRight(rightBoard);
+		    	   aiDecoderPane.setCenter(gameBoard);
+		    	   ArrayList<Peg> aiGuess = AIMastermind.initialguess();
+		    	   for(int x=0; x<Params.boardWidth; x++){
+		    		   gameBoardButtons[x][rowIndex].pegInput = aiGuess.get(x);
+		    		   gameBoardButtons[x][rowIndex].redraw();
+		    	   }
+		    	   rowIndex-=1;
+		    	   
+		    	   
+		    	   primaryStage.setScene(aiDecoderScene);
+		    	   	}
+		});
 		
 		//Check Button Handler, this is where the magic happens//
 		check.setOnAction(new EventHandler<ActionEvent>() {
@@ -313,7 +398,7 @@ public class MastermindFX extends Application{
 		    	    if(feedbackBoard[0][rowIndex].checkWin() == true){
 		    	    	pane.setCenter(gameCompletedPane);
 		    	    	pane.getChildren().remove(rightBoard);
-		    	    	winOrLose = new Text("You Won!");
+		    	    	winOrLose.setText("You Won!");
 		    	    	return;
 		    	    }
 		    	    
@@ -322,7 +407,7 @@ public class MastermindFX extends Application{
 		    	   if(rowIndex == 0){
 		    	    	pane.setCenter(gameCompletedPane);
 		    	    	pane.getChildren().remove(rightBoard);
-		    	    	winOrLose = new Text("You Lost!");
+		    	    	winOrLose.setText("You Lost!");
 		    	    	return;
 		    	   }
 		    	 //Disabling previous row//
@@ -335,10 +420,65 @@ public class MastermindFX extends Application{
 			    	}
 		       }
 		});
+		
+		submit.setOnAction(new EventHandler<ActionEvent>() {
+		       @Override
+		       public void handle(ActionEvent e) {
+		    	  answerKey.getChildren().clear();
+		    	  int blackPegs=0;
+		    	  int whitePegs=0;
+		    	  ArrayList<Peg> feedback = new ArrayList<Peg>();
+		    	   //Check to see if any of the buttons in the same row are gray//
+		    	   for(int x=0; x<Params.boardWidth; x++){
+		    		  if(humanFeedback[x].pegInput.getPegName().equals("Black")){
+		    			   blackPegs++;
+		    			   feedback.add(PegCreator.pegConstructor("Black"));
+		    		   }
+		    		   else if(humanFeedback[x].pegInput.getPegName().equals("White")){
+		    			   whitePegs++;
+		    			   feedback.add(PegCreator.pegConstructor("White"));
+		    		   }
+		    		  answerKey.getChildren().add(new RoundButton(gameBoardButtons[x][rowIndex+1].pegInput.getPegName(), 30));
+		    		  humanFeedback[x].pegInput = PegCreator.pegConstructor("Gray");
+		    		  humanFeedback[x].redraw();
+		    	   	}
+		    	   //---------------------------End of Check---------------------//
+		    	   if(blackPegs==Params.pegNumbertoGuess){
+				   			
+					
+		    		   aiDecoderPane.setCenter(gameCompletedPane);
+		    		   aiDecoderPane.getChildren().remove(rightBoard);
+		    	    	winOrLose.setText("AI Won!");
+		    	    	return;
+		    	   }
+		    	   
+		    	   ArrayList<Peg> aiGuess = AIMastermind.aiGuessBasedOnFeedback(blackPegs,whitePegs);
+		    	   if(aiGuess == null){
+		    		   winOrLose.setText("YOU CHEATED!");
+		    		   aiDecoderPane.setCenter(gameCompletedPane);
+		    		   aiDecoderPane.getChildren().remove(rightBoard);
+		    		   return;
+		    	   }
+		    	   feedbackBoard[0][rowIndex+1].changeFeedback(feedback);
+		    	   
+		    	   for(int x=0; x<Params.boardWidth;x++){
+		    		   gameBoardButtons[x][rowIndex].pegInput = aiGuess.get(x);
+		    		   gameBoardButtons[x][rowIndex].redraw();
+		    		   gameBoardButtons[x][rowIndex+1].setDisable(true);
+		    		   gameBoardButtons[x][rowIndex].setDisable(false);
+		    	   }
+		    	   rowIndex -= 1;
+		       }
+		    	   
+		    	    
+		});
+		
 		playAgainButton.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent e){
 				MasterMindConsole.answerGenerator();
 				gameBoard.getChildren().clear();
+				rightBoard.getChildren().clear();
+				answerKey.getChildren().clear();
 				rowIndex = Params.boardHeight-1;
 				
 				//Reseting GameBoardButtons//
@@ -361,9 +501,7 @@ public class MastermindFX extends Application{
 				}
 				
 				//Reseting the Pane//
-				//pane.setLeft(leftBoard);
-				pane.setCenter(gameBoard);
-				pane.setRight(rightBoard);
+				primaryStage.setScene(startupScene);
 			}
 		});
 	}
@@ -373,7 +511,7 @@ public class MastermindFX extends Application{
 	private static void registerGameBoardButton(RoundButton button){
 		button.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event){
-				if(cursorColor != "Gray"){
+				if(cursorColor != "Gray" && cursorColor != "White" && cursorColor != "Black"){
 					button.pegInput = PegCreator.pegConstructor(cursorColor);
 					button.redraw();
 					cursorColor = "Gray";
@@ -381,6 +519,18 @@ public class MastermindFX extends Application{
 				}
 			}
 		});
+	}
+		private static void registerFeedbackButton(RoundButton button){
+			button.setOnAction(new EventHandler<ActionEvent>(){
+				public void handle(ActionEvent event){
+					if(cursorColor != "Gray"){
+						button.pegInput = PegCreator.pegConstructor(cursorColor);
+						button.redraw();
+						cursorColor = "Gray";
+						aiDecoderScene.setCursor(Cursor.DEFAULT);
+					}
+				}
+			});
 		
 	}
 	

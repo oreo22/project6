@@ -15,6 +15,7 @@ public class Main {
 		Scanner s = new Scanner(System.in);
 			System.out.println("Welcome to Mastermind!");
 			do{
+				
 			correctInput = true;
 			System.out.println("For Text Interface, please type 'Text'");
 			System.out.println("For Graphical Interface, please type 'Graphical'");
@@ -22,6 +23,7 @@ public class Main {
 			String consoleType=s.nextLine();
 			if(consoleType.equals("Text") || consoleType.equals("text")){
 				do{
+					System.out.println(MasterMindConsole.answerKey);
                     System.out.println("To guess against the AI, please type '1'"); //Human Vs. AI
                     System.out.println("To make the AI guess, please type '2'"); //AI Vs. Human
                     System.out.println("Choose the Playing Mode");
@@ -38,6 +40,7 @@ public class Main {
                     }
 					System.out.println("Play Again? (Y/N)");
 					String play = s.next();
+					MasterMindConsole.answerGenerator();
 					if (play.equals("N")) {
 						playAgain = false;
 						System.out.println("Thanks for playing!");

@@ -12,6 +12,8 @@ public class MasterMindConsole {
 	
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){ //it's public because Main is using it
+		answerKey.clear();
+		answer.clear();
 		for(int x=0; x<Params.pegNumbertoGuess; x++){
 			int temp=randomIntGenerator();
 			Peg answerPeg=PegCreator.pegConstructor(PegCreator.numberToPegColor(temp));
