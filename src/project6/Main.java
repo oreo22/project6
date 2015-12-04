@@ -23,7 +23,6 @@ public class Main {
 			String consoleType=s.nextLine();
 			if(consoleType.equals("Text") || consoleType.equals("text")){
 				do{
-					System.out.println(MasterMindConsole.answerKey);
                     System.out.println("To guess against the AI, please type '1'"); //Human Vs. AI
                     System.out.println("To make the AI guess, please type '2'"); //AI Vs. Human
                     System.out.println("Choose the Playing Mode");

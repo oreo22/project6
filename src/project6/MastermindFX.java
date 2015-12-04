@@ -19,6 +19,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -121,7 +122,7 @@ public class MastermindFX extends Application{
 		BorderPane startupPane = new BorderPane();
 		
 		GridPane gameCompletedPane = new GridPane();
-		GridPane startupGrid = new GridPane();
+		VBox startupGrid = new VBox();
 		
 		//Game Completed Screen//
 		Button playAgainButton = new Button();
@@ -132,7 +133,6 @@ public class MastermindFX extends Application{
 		winOrLose.setTextAlignment(TextAlignment.CENTER);
 		winOrLose.setWrappingWidth(120);
 		HBox answerKey = new HBox();
-		
 		playAgainButton.setText("Play Again");
 		playAgainButton.setMinWidth(120);
 		gameCompletedPane.add(winOrLose, 0, 0);
@@ -147,13 +147,15 @@ public class MastermindFX extends Application{
 		//Startup Screen//
 		Button aiDecoderMode = new Button();
 		Button humanDecoderMode = new Button();
-		Text welcome = new Text("Welcome to MasterMind! Please Select an Option Below.");
+		Text welcome = new Text("Welcome to MasterMind!\nPlease Select an Option Below.");
+		welcome.setFont(new Font("Arial", 30));
+		welcome.setTextAlignment(TextAlignment.CENTER);
+		welcome.setWrappingWidth(800);
 		aiDecoderMode.setText("AI as Decoder");
 		humanDecoderMode.setText("Human as Decoder");
-		welcome.setTextAlignment(TextAlignment.CENTER);
-		startupGrid.add(welcome, 0, 0);
-		startupGrid.add(aiDecoderMode, 0, 1);
-		startupGrid.add(humanDecoderMode, 1, 1);
+		startupGrid.getChildren().add(welcome);
+		startupGrid.getChildren().add(aiDecoderMode);
+		startupGrid.getChildren().add(humanDecoderMode);
 		startupGrid.setAlignment(Pos.CENTER);
 		startupPane.setCenter(startupGrid);
 		startupPane.setMinSize(screenSize.getWidth()/2, screenSize.getHeight()/2);
@@ -345,7 +347,6 @@ public class MastermindFX extends Application{
 		humanDecoderMode.setOnAction(new EventHandler<ActionEvent>(){
 		       @Override
 		       public void handle(ActionEvent e) {
-		    	   System.out.println(MasterMindConsole.answerKey);
 		   		for(int x=0; x<MasterMindConsole.answerKey.size(); x++){
 					answerKey.getChildren().add(new RoundButton(MasterMindConsole.answerKey.get(x).getPegName(), 30));
 				}
