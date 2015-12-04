@@ -11,14 +11,26 @@ import project6.Pegs.Peg;
 public class BluePeg extends Peg {
     public BluePeg(){
         color= Color.BLUE;
-        pegText='B';
-        pegName="Blue";
     }
 
 
     @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Blue";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'B';
+    }
+
+    @Override
     public Peg copy() {
-        BluePeg copy=new BluePeg();
-        return copy;
+        return new BluePeg();
     }
 }

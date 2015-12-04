@@ -5,14 +5,25 @@ import javafx.scene.paint.Color;
 public class GrayPeg extends Peg{
 	public GrayPeg(){
         color= Color.GRAY;
-        pegText='G';
-        pegName="Gray";
     }
 
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Gray";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'G';
+    }
 
     @Override
     public Peg copy() {
-        GrayPeg copy=new GrayPeg();
-        return copy;
+        return new GrayPeg();
     }
 }

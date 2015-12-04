@@ -4,11 +4,24 @@ import javafx.scene.paint.Color;
 public class RedPeg extends Peg {
    public RedPeg(){
         color= Color.RED;
-        pegText='R';
-        pegName="Red";
     }
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Red";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'R';
+    }
+
+    @Override
     public Peg copy() {
-        RedPeg copy=new RedPeg();
-        return copy;
+        return new RedPeg();
     }
 }

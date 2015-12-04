@@ -8,11 +8,24 @@ import javafx.scene.paint.*;
 public class PurplePeg extends Peg {
     public PurplePeg(){
         color= Color.PURPLE;
-        pegText='P';
-        pegName="Purple";
     }
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Purple";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'P';
+    }
+
+    @Override
     public Peg copy() {
-        PurplePeg copy=new PurplePeg();
-        return copy;
+        return new PurplePeg();
     }
 }

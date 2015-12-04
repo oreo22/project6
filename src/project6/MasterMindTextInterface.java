@@ -70,31 +70,13 @@ public class MasterMindTextInterface {
 		ArrayList<Peg> userInput=new ArrayList<>(Params.pegNumbertoGuess);
 		String[] inputArray = input.split(""); //haven't coded exception handling when they put the wrong letter
 		for(int x=0; x<inputArray.length; x++){
-			Peg covertedPeg = textToPeg(inputArray[x]);
+			Peg covertedPeg = PegCreator.pegConstructor(inputArray[x]);
 			if(covertedPeg == null){
 				return null;
 			}
 			userInput.add(covertedPeg);
 		}
 		return userInput;
-	}
-	private static Peg textToPeg(String s){
-		switch (s) {
-			case "B":
-				return new BluePeg();
-			case "G":
-				return new GreenPeg();
-			case "O":
-				return new OrangePeg();
-			case "P":
-				return new PurplePeg();
-			case "R":
-				return new RedPeg();
-			case "Y":
-				return new YellowPeg();
-			default:
-				return null; //for error handling
-		}
 	}
 
 	//-------AI MASTERMIND------

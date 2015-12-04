@@ -8,11 +8,24 @@ import javafx.scene.paint.Color;
 public class GreenPeg extends Peg {
     public GreenPeg(){
         color= Color.GREEN;
-        pegText='G';
-        pegName="Green";
     }
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Green";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'G';
+    }
+
+    @Override
     public Peg copy() {
-        GreenPeg copy=new GreenPeg();
-        return copy;
+        return new GreenPeg();
     }
 }

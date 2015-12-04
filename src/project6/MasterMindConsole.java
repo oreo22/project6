@@ -6,17 +6,9 @@ import project6.Pegs.*;
 public class MasterMindConsole {
 	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
-	public final static ArrayList<Peg> availableColors = new ArrayList<Peg>(){{
-		add(new RedPeg());
-		add(new YellowPeg());
-		add(new OrangePeg());
-		add(new BluePeg());
-		add(new PurplePeg());
-		add(new GreenPeg());
-		
-	}};
-	
-	
+
+
+
 	
 	//-----Creating random code for user to guess--------
 	public static void answerGenerator(){ //it's public because Main is using it
@@ -36,7 +28,7 @@ public class MasterMindConsole {
 	}
 	private static int randomIntGenerator(){
 		Random rand = new Random();
-		int value = rand.nextInt(5);
+		int value = rand.nextInt(6);
 		return value;
 	}
 	//------Did the user guess the correct code?---- From graphics or console, just send in an arraylist of Pegs, and this method will check for you

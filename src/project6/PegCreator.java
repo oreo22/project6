@@ -1,5 +1,8 @@
 package project6;
 import project6.Pegs.*;
+
+import java.util.ArrayList;
+
 /**
  * Created by Oriana_W on 23/11/2015.
  */
@@ -23,36 +26,45 @@ public class PegCreator {
         return pegColor;
     }
     public static Peg pegConstructor(String pegName){
-        if(pegName=="Blue"){
+        if(pegName.equals("Blue") || pegName.equals("B")){
             return new BluePeg();
         }
-        else if(pegName=="Green"){
+        else if(pegName.equals("Green") || pegName.equals("G")){
             return new GreenPeg();
         }
-        else if(pegName=="Orange"){
+        else if(pegName.equals("Orange") || pegName.equals("O")){
             return new OrangePeg();
         }
-        else if(pegName=="Purple"){
+        else if(pegName.equals("Purple") || pegName.equals("P")){
             return new PurplePeg();
         }
-        else if(pegName=="Red"){
+        else if(pegName.equals("Red") || pegName.equals("R")){
             return new RedPeg();
         }
-        else if(pegName=="Yellow"){
+        else if(pegName.equals("Yellow") || pegName.equals("Y")){
             return new YellowPeg();
         }
-        else if(pegName == "Gray"){
+        else if(pegName .equals("Gray")){
         	return new GrayPeg();
         }
-        else if(pegName == "White"){
+        else if(pegName.equals("White")){
         	return new WhitePeg();
         }
-        else if(pegName == "Black"){
+        else if(pegName.equals("Black")){
         	return new BlackPeg();
         }
         else {
             return null;
         }
     }
+    public final static ArrayList<Peg> availableColors = new ArrayList<Peg>(){{
+        add(new RedPeg());
+        add(new YellowPeg());
+        add(new OrangePeg());
+        add(new BluePeg());
+        add(new PurplePeg());
+        add(new GreenPeg());
+
+    }};
 }
 

@@ -11,11 +11,12 @@ import project6.Pegs.*;
  */
 
 public class AIMastermind {
-	
+
 	private static ArrayList<Peg> aiGuess;
 	private static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
-	
-	
+	//private static ArrayList<Peg> possibleColorChoices=new ArrayList(Params.numberOfPegTypes);
+
+
 	private static void removeNonIntersections(int PegsCount){ //remove the colors that were in aiGuess
 		int correctColor = 0;
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
@@ -91,8 +92,8 @@ public class AIMastermind {
 		if(pos==-1){
 			return;
 		}
-		for(int x=0; x<MasterMindConsole.availableColors.size(); x++){
-			guess.set(pos, MasterMindConsole.availableColors.get(x));
+		for(int x=0; x<PegCreator.availableColors.size(); x++){
+			guess.set(pos, PegCreator.availableColors.get(x));
 			possibleCombinations.add(new ArrayList<Peg>(guess));
 			possibleCombinationsConstructorRecur(guess, pos-1);
 		}
@@ -102,7 +103,7 @@ public class AIMastermind {
 	private static void possibleCombinationsConstructor(){
 		ArrayList<Peg> guess = new ArrayList<Peg>();
     	for(int x=0; x<Params.boardWidth; x++){
-    		guess.add(MasterMindConsole.availableColors.get(0));
+    		guess.add(PegCreator.availableColors.get(0));
     	}
     	possibleCombinationsConstructorRecur(guess, guess.size()-1);
 	}
@@ -112,10 +113,10 @@ public class AIMastermind {
     	possibleCombinationsConstructor();
     	ArrayList<Peg> initialguess=new ArrayList(Params.pegNumbertoGuess);
     	for(int x=0; x<(Params.pegNumbertoGuess/2); x++){
-    		initialguess.add(MasterMindConsole.availableColors.get(0));
+    		initialguess.add(PegCreator.availableColors.get(0));
     	}
     	for(int x=(Params.pegNumbertoGuess/2); x< Params.pegNumbertoGuess; x++){
-    		initialguess.add(MasterMindConsole.availableColors.get(1));
+    		initialguess.add(PegCreator.availableColors.get(1));
     	}
     	aiGuess = initialguess;
     	return aiGuess;
@@ -130,6 +131,9 @@ public class AIMastermind {
     	}
 		if((whitePegCount+blackPegCount) == 4){
 			removeNonIntersections(whitePegCount+blackPegCount);
+		}
+		if(possibleCombinations.size()<=0){
+			//CHEATING DETECTED
 		}
     	else if((blackPegCount+whitePegCount) == 0){
     		removeCurrentColors();

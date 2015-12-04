@@ -8,11 +8,24 @@ import javafx.scene.paint.Color;
 public class OrangePeg extends Peg {
    public  OrangePeg(){ //is this a good idea??? for constructor to be declared public?
         color= Color.ORANGE;
-        pegText='O';
-        pegName="Orange";
     }
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "Orange";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'O';
+    }
+
+    @Override
     public Peg copy() {
-        OrangePeg copy=new OrangePeg();
-        return copy;
+        return new OrangePeg();
     }
 }

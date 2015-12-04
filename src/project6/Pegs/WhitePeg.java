@@ -7,11 +7,25 @@ import javafx.scene.paint.Color;
 public class WhitePeg extends Peg{
     public WhitePeg(){
         color= Color.WHITE;
-        pegText='W';
-        pegName="White";
     }
+    @Override
+    public int hashCode() {
+        return this.getPegName().hashCode();
+    }
+
+    @Override
+    public String getPegName() {
+        return "White";
+    }
+
+    @Override
+    public char getPegText() {
+        return 'W';
+    }
+
+    @Override
     public Peg copy() {
-        return null;
+        return new WhitePeg();
     }
 
 }
