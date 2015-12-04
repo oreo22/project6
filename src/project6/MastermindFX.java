@@ -444,7 +444,12 @@ public class MastermindFX extends Application{
 		    	    	winOrLose.setText("AI Won!");
 		    	    	return;
 		    	   }
-		    	   
+		    	   if(rowIndex<0){
+		    		   aiDecoderPane.setCenter(gameCompletedPane);
+		    		   aiDecoderPane.getChildren().remove(rightBoard);
+		    	    	winOrLose.setText("AI Lost :(");
+		    	    	return;
+		    	   }
 		    	   ArrayList<Peg> aiGuess = AIMastermind.aiGuessBasedOnFeedback(blackPegs,whitePegs);
 		    	   if(aiGuess == null){
 		    		   winOrLose.setText("YOU CHEATED!");
