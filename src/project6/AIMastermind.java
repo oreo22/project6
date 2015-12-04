@@ -16,10 +16,11 @@ public class AIMastermind {
 	private static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
 
 
-	private static void removeNonIntersections(int PegsCount){ //remove the colors that were in aiGuess
+	private static void removeNonIntersections(int PegsCount){ //remove the colors combinations that dont have the same amount of colors as aiGuess
 		int correctColor = 0;
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
 		while(itr.hasNext()){
+			correctColor = 0;
 			ArrayList <Peg> victim=itr.next();
 			ArrayList <Peg> victimTemp = new ArrayList<Peg>(victim);
 			for(int i=0; i<aiGuess.size(); i++){
@@ -33,6 +34,8 @@ public class AIMastermind {
 			}
 		}
 	}
+	
+	
 	
 	private static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
@@ -107,19 +110,16 @@ public class AIMastermind {
     }
     
     public static ArrayList<Peg> aiGuessBasedOnFeedback(int blackPegCount, int whitePegCount){
- 
+		if((whitePegCount+blackPegCount) == 4){
+			removeNonIntersections(whitePegCount+blackPegCount);
+		}
 		if(blackPegCount >= 1){
 			removeIncorrectPositionCombinations(blackPegCount);
 		}
     	if(whitePegCount >= 1){
     		removeNonIntersections(whitePegCount);
     	}
-		if((whitePegCount+blackPegCount) == 4){
-			removeNonIntersections(whitePegCount+blackPegCount);
-		}
-		if(possibleCombinations.size()<=0){
-			//CHEATING DETECTED
-		}
+
     	else if((blackPegCount+whitePegCount) == 0){
     		removeCurrentColors();
     	}

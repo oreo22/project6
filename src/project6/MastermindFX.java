@@ -78,14 +78,6 @@ public class MastermindFX extends Application{
 		}
 		}
 		
-		feedbackFlowPane(int size){
-		this.setPrefWrapLength(size*4);
-		for(int x=0; x<Params.pegNumbertoGuess; x++){
-			feedbackPegs[x] = new RoundButton("Gray", size);
-			this.getChildren().add(feedbackPegs[x]);
-		}
-		}
-		
 		private void changeFeedback(ArrayList<Peg> consoleFeedback){
 			int pos=0;
 			for(int x=0; x<consoleFeedback.size(); x++){
@@ -524,12 +516,11 @@ public class MastermindFX extends Application{
 		private static void registerFeedbackButton(RoundButton button){
 			button.setOnAction(new EventHandler<ActionEvent>(){
 				public void handle(ActionEvent event){
-					if(cursorColor != "Gray"){
 						button.pegInput = PegCreator.pegConstructor(cursorColor);
 						button.redraw();
 						cursorColor = "Gray";
 						aiDecoderScene.setCursor(Cursor.DEFAULT);
-					}
+					
 				}
 			});
 		
