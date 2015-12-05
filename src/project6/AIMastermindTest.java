@@ -7,12 +7,15 @@ import project6.Pegs.*;
 
 import java.lang.Override;
 
+import org.junit.Test;
+
 /**
  * Created by Oriana_W on 05/12/2015.
  */
 public class AIMastermindTest extends TestCase {
 
-    @Before public void aiGuessBasedOnFeedback() throws Exception {
+	@Test
+	public void aiGuessBasedOnFeedback() throws Exception {
         int whitePegCount=0; int blackPegCount=0;
         AIMastermind.aiGuess.add(new RedPeg());
         AIMastermind.aiGuess.add(new YellowPeg());
