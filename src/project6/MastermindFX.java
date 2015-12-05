@@ -30,7 +30,7 @@ public class MastermindFX extends Application{
 	private feedbackFlowPane[][] feedbackBoard = new feedbackFlowPane[1][Params.boardHeight];
 	private RoundButton[] humanFeedback = new RoundButton[Params.pegNumbertoGuess];
 	
-	double BUTTON_PADDING = 30;
+	private double BUTTON_PADDING = 30;
 	private static String cursorColor = "Gray";
 	private static Scene s;
 	private static Scene aiDecoderScene;
@@ -40,7 +40,7 @@ public class MastermindFX extends Application{
 	//New Type of Button that has a color component to it and is also round//
 	private class RoundButton extends Button{
 		Peg pegInput;
-		int size;
+		private int size;
 		RoundButton(String color, int size){
 			this.pegInput = PegCreator.pegConstructor(color);
 			this.size = size;
