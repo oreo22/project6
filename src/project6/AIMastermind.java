@@ -12,8 +12,8 @@ import project6.Pegs.*;
 
 public class AIMastermind {
 
-	private static ArrayList<Peg> aiGuess;
-	private static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
+	public static ArrayList<Peg> aiGuess;
+	public static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
 
 
 	private static void removeNonIntersections(int PegsCount){ //remove the colors combinations that dont have the same amount of colors as aiGuess
