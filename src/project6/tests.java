@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.junit.*;
 
@@ -13,35 +14,55 @@ public class tests {
 
 	@Test
 	public void RemoveAllColorsTest() {
-	       int whitePegCount=0; int blackPegCount=0;
+	       AIMastermind.possibleCombinations = new HashSet<ArrayList<Peg>>();
+	       AIMastermind.possibleCombinationsConstructor();
 	       AIMastermind.aiGuess = new ArrayList<Peg>();
 	        AIMastermind.aiGuess.add(new RedPeg());
 	        AIMastermind.aiGuess.add(new YellowPeg());
 	        AIMastermind.aiGuess.add(new BluePeg());
 	        AIMastermind.aiGuess.add(new PurplePeg());
-	        AIMastermind.aiGuessBasedOnFeedback(blackPegCount,whitePegCount);
+	        AIMastermind.removeCurrentColors();
+	        AIMastermind.aiGuess = new ArrayList<Peg>();
 	        AIMastermind.aiGuess.add(new GreenPeg());
 	        AIMastermind.aiGuess.add(new OrangePeg());
 	        AIMastermind.aiGuess.add(new BluePeg());
 	        AIMastermind.aiGuess.add(new PurplePeg());
-	        AIMastermind.aiGuessBasedOnFeedback(blackPegCount,whitePegCount);
-	        assert(AIMastermind.possibleCombinations.size()==0);
+	        AIMastermind.removeCurrentColors();
+	        assertEquals(0, AIMastermind.possibleCombinations.size());
 	}
-	
+	@Test
 	public void RemoveNonIntersectionsTest() {
-	       int whitePegCount=0; int blackPegCount=0;
+	       int whitePegCount=1; int blackPegCount=0;
+	       AIMastermind.aiGuess = new ArrayList<Peg>();
+	       ArrayList<Peg> testArray = new ArrayList<Peg>();
+	       
+	       testArray.add(new GreenPeg());
+	       testArray.add(new OrangePeg());
+	       testArray.add(new BluePeg());
+	       testArray.add(new PurplePeg());
+	       
+	       AIMastermind.possibleCombinations = new HashSet<ArrayList<Peg>>();
+	       AIMastermind.possibleCombinations.add(testArray);
+	       
+	        AIMastermind.aiGuess.add(new RedPeg());
+	        AIMastermind.aiGuess.add(new YellowPeg());
+	        AIMastermind.aiGuess.add(new RedPeg());
+	        AIMastermind.aiGuess.add(new RedPeg());
+	        AIMastermind.aiGuessBasedOnFeedback(blackPegCount,whitePegCount);
+	        assertEquals(0, AIMastermind.possibleCombinations.size());
+	}
+	@Test
+	public void RemoveIncorrectPositionCombinations() {
+	       int whitePegCount=0; int blackPegCount=4;
+	       AIMastermind.possibleCombinations.clear();
+	       AIMastermind.possibleCombinationsConstructor();
 	       AIMastermind.aiGuess = new ArrayList<Peg>();
 	        AIMastermind.aiGuess.add(new RedPeg());
 	        AIMastermind.aiGuess.add(new YellowPeg());
 	        AIMastermind.aiGuess.add(new BluePeg());
 	        AIMastermind.aiGuess.add(new PurplePeg());
 	        AIMastermind.aiGuessBasedOnFeedback(blackPegCount,whitePegCount);
-	        AIMastermind.aiGuess.add(new GreenPeg());
-	        AIMastermind.aiGuess.add(new OrangePeg());
-	        AIMastermind.aiGuess.add(new BluePeg());
-	        AIMastermind.aiGuess.add(new PurplePeg());
-	        AIMastermind.aiGuessBasedOnFeedback(blackPegCount,whitePegCount);
-	        assert(AIMastermind.possibleCombinations.size()==0);
+	        assertEquals(1, AIMastermind.possibleCombinations.size());
 	}
 	@Test
 	public void possibleCombinationTest() {
@@ -70,13 +91,13 @@ public class tests {
 			ArrayList<Integer> colorPositions4=new ArrayList<>(Params.pegNumbertoGuess);
 			colorPositions.add(3);
 			MasterMindConsole.answer.put("Red",colorPositions4);
-		;
+		
 		ArrayList<Peg> testUserInput1=new ArrayList<Peg>(){{ //ROPG returns 2 white pegs
 			add(new RedPeg()); add(new OrangePeg()); add(new PurplePeg()); add(new GreenPeg());}};
 		ArrayList<Peg> feedback1=MasterMindConsole.inputCheck(testUserInput1);
 		ArrayList<Peg> correctFeedback1=new ArrayList<Peg>(){{add(new WhitePeg()); add(new WhitePeg()); }};
-		for(int i=0; i<feedback1.size(); i++){
-			if(feedback1.contains(correctFeedback1.get(i))){
+		for(int i=0; i<correctFeedback1.size(); i++){
+			if(correctFeedback1.contains(feedback1.get(i))){
 				feedback1.remove(i);
 				correctFeedback1.remove(i);
 			}

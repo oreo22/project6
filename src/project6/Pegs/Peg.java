@@ -8,8 +8,8 @@ public abstract class Peg {
 	int y;
 	int index;
 	Color color;
-	char pegText;
-	String pegName;*/
+	char pegText;*/
+	String pegName;
 
 	public boolean equals(Peg p2){ //same color, does this method look at the dynamic type?
 		if(this.getPegName().equals(p2.getPegName())){
@@ -17,6 +17,10 @@ public abstract class Peg {
 		}
 		return false;
 	}
+	/*
+	public boolean contains(Object p2){
+		return true;
+	}*/
 	public abstract int hashCode();
 	public abstract String getPegName();
 	public abstract char getPegText();

@@ -37,11 +37,12 @@ public class AIMastermind {
 	
 	
 	
-	private static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
+	public static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
 		while(itr.hasNext()){
 			ArrayList <Peg> victim=itr.next();
 			for(int i=0; i<aiGuess.size(); i++){
+				System.out.print(victim.contains(aiGuess.get(i)));
 				if(victim.contains(aiGuess.get(i))){
 					itr.remove();
 					break;
@@ -86,7 +87,7 @@ public class AIMastermind {
 		
 	}
 	
-	private static void possibleCombinationsConstructor(){
+	public static void possibleCombinationsConstructor(){
 		ArrayList<Peg> guess = new ArrayList<Peg>();
     	for(int x=0; x<Params.boardWidth; x++){
     		guess.add(PegCreator.availableColors.get(0));
