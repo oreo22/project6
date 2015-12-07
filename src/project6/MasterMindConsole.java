@@ -4,7 +4,7 @@ import java.util.*;
 import project6.Pegs.*;
 
 public class MasterMindConsole {
-	public static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
+	private static HashMap<String, ArrayList<Integer>> answer=new HashMap<>(Params.pegNumbertoGuess);
 	public static ArrayList<Peg> answerKey = new ArrayList<Peg>();
 
 

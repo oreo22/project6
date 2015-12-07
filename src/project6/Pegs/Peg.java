@@ -9,18 +9,15 @@ public abstract class Peg {
 	int index;
 	Color color;
 	char pegText;*/
-	String pegName;
 
-	public boolean equals(Peg p2){ //same color, does this method look at the dynamic type?
-		if(this.getPegName().equals(p2.getPegName())){
-			return true;
+	public boolean equals(Object p2){ //same color, does this method look at the dynamic type
+		if(p2 instanceof Peg){
+			if(this.getPegName().equals(((Peg) p2).getPegName())){
+				return true;
+			}
 		}
 		return false;
 	}
-	/*
-	public boolean contains(Object p2){
-		return true;
-	}*/
 	public abstract int hashCode();
 	public abstract String getPegName();
 	public abstract char getPegText();

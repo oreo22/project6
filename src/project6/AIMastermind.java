@@ -12,8 +12,8 @@ import project6.Pegs.*;
 
 public class AIMastermind {
 
-	public static ArrayList<Peg> aiGuess;
-	public static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
+	private static ArrayList<Peg> aiGuess;
+	private static HashSet<ArrayList<Peg>> possibleCombinations = new HashSet<ArrayList<Peg>>();
 
 
 	private static void removeNonIntersections(int PegsCount){ //remove the colors combinations that dont have the same amount of colors as aiGuess
@@ -37,12 +37,12 @@ public class AIMastermind {
 	
 	
 	
-	public static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
+	private static void removeCurrentColors(){ //remove the combinations that don't have aiInput's colors
 		Iterator<ArrayList<Peg>> itr = possibleCombinations.iterator();
 		while(itr.hasNext()){
 			ArrayList <Peg> victim=itr.next();
 			for(int i=0; i<aiGuess.size(); i++){
-				System.out.print(victim.contains(aiGuess.get(i)));
+				
 				if(victim.contains(aiGuess.get(i))){
 					itr.remove();
 					break;
@@ -87,7 +87,7 @@ public class AIMastermind {
 		
 	}
 	
-	public static void possibleCombinationsConstructor(){
+	private static void possibleCombinationsConstructor(){
 		ArrayList<Peg> guess = new ArrayList<Peg>();
     	for(int x=0; x<Params.boardWidth; x++){
     		guess.add(PegCreator.availableColors.get(0));
